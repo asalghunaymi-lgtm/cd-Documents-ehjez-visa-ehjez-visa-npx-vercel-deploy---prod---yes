@@ -5,33 +5,33 @@
 
 :root {
   --font-arabic: "Cairo", "Tahoma", sans-serif;
-  --background: #ffffff;
-  --foreground: #0b1220;
+  --background: #fcfaf6;
+  --foreground: #292724;
 
-  /* Brand: Deep Navy */
-  --navy-50: #eef3fb;
-  --navy-100: #d6e2f3;
-  --navy-200: #adc5e6;
-  --navy-300: #7ea3d6;
-  --navy-400: #4f7ec3;
-  --navy-500: #2f5fa8;
-  --navy-600: #1f4685;
-  --navy-700: #17356a;
-  --navy-800: #0f2650;
-  --navy-900: #0a1c3d;
-  --navy-950: #061229;
+  /* Brand: Deep, refined green */
+  --navy-50: #f1f8f4;
+  --navy-100: #e1f0e8;
+  --navy-200: #c3dfd1;
+  --navy-300: #96c7ae;
+  --navy-400: #6baf91;
+  --navy-500: #4c9877;
+  --navy-600: #3e7f63;
+  --navy-700: #336b54;
+  --navy-800: #2a5a46;
+  --navy-900: #234f3d;
+  --navy-950: #193b2e;
 
-  /* Brand: Refined Gold */
-  --gold-50: #fbf6e9;
-  --gold-100: #f4e8c3;
-  --gold-200: #ecd894;
-  --gold-300: #e2c465;
-  --gold-400: #d3ab41;
-  --gold-500: #bd9530;
-  --gold-600: #9a7a26;
-  --gold-700: #7a611f;
-  --gold-800: #5c491a;
-  --gold-900: #3f3213;
+  /* Brand: Muted, matte gold */
+  --gold-50: #fbf7ee;
+  --gold-100: #f3e9d2;
+  --gold-200: #e7d3a8;
+  --gold-300: #dabc7e;
+  --gold-400: #c9a65b;
+  --gold-500: #b08f49;
+  --gold-600: #93753a;
+  --gold-700: #755d2e;
+  --gold-800: #574524;
+  --gold-900: #3b2f18;
 
   --primary: var(--navy-900);
   --primary-foreground: #ffffff;
@@ -43,25 +43,25 @@
   --popover: #ffffff;
   --popover-foreground: var(--foreground);
 
-  --muted: #f4f6fa;
-  --muted-foreground: #5b6478;
+  --muted: #f7f2e9;
+  --muted-foreground: #6f6a63;
 
   --accent: var(--gold-50);
   --accent-foreground: var(--navy-900);
 
-  --destructive: #c8433f;
+  --destructive: #b3453f;
   --destructive-foreground: #ffffff;
 
   --success: #1c7c54;
   --success-foreground: #ffffff;
-  --warning: #b8860b;
+  --warning: #93753a;
   --warning-foreground: #ffffff;
 
-  --border: #e6e9f0;
-  --input: #e6e9f0;
+  --border: #d8d0c3;
+  --input: #d8d0c3;
   --ring: var(--navy-500);
 
-  --radius: 0.85rem;
+  --radius: 0.7rem;
 }
 
 @theme inline {
@@ -136,11 +136,11 @@ body {
 }
 
 .bg-brand-gradient {
-  background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 45%, var(--navy-700) 100%);
+  background: linear-gradient(150deg, var(--navy-950) 0%, var(--navy-800) 100%);
 }
 
 .text-gradient-gold {
-  background: linear-gradient(90deg, var(--gold-300), var(--gold-500));
+  background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -160,7 +160,7 @@ body {
 }
 
 .card-elevated {
-  box-shadow: 0 1px 2px rgba(10, 28, 61, 0.04), 0 10px 30px -12px rgba(10, 28, 61, 0.18);
+  box-shadow: 0 1px 2px rgba(41, 39, 36, 0.04), 0 8px 20px -10px rgba(41, 39, 36, 0.12);
 }
 
 ::selection {

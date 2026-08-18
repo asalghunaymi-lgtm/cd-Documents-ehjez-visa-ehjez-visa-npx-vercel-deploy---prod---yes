@@ -11,7 +11,7 @@ export default function AdminCountriesPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-extrabold text-navy-950">الدول والتأشيرات</h1>
-        <Button variant="gold" size="sm">
+        <Button variant="default" size="sm">
           <Plus className="size-4" /> إضافة دولة جديدة
         </Button>
       </div>

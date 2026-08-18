@@ -38,7 +38,7 @@ export default function SignupPage() {
               <Label className="mb-1.5 block">كلمة المرور</Label>
               <Input type="password" dir="ltr" />
             </div>
-            <Button className="w-full" variant="gold" asChild>
+            <Button className="w-full" variant="default" asChild>
               <Link href="/apply">إنشاء الحساب ومتابعة طلبي</Link>
             </Button>
           </form>

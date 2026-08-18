@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 export function CountryHero({ country }: { country: CountryVisaInfo }) {
   return (
     <section className={cn("relative overflow-hidden bg-gradient-to-br", country.heroImageGradient)}>
-      <div className="pointer-events-none absolute -left-20 top-0 size-72 rounded-full bg-gold-500/15 blur-3xl" />
       <div className="container-app relative py-14 sm:py-20">
         <Link href="/visa" className="mb-5 inline-block text-xs font-semibold text-navy-200 hover:text-gold-300">
           ← جميع الدول

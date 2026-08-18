@@ -28,18 +28,18 @@ export function SmartSearch() {
           e.preventDefault();
           if (matches[0]) router.push(`/visa/${matches[0]!.slug}`);
         }}
-        className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 p-2 backdrop-blur-md focus-within:border-gold-400/60"
+        className="flex items-center gap-2 rounded-2xl border border-border bg-white p-2 shadow-xs transition-colors focus-within:border-navy-300"
       >
-        <Search className="ms-2 size-5 shrink-0 text-gold-300" />
+        <Search className="ms-2 size-5 shrink-0 text-navy-700" />
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 150)}
           placeholder="إلى أين تريد السفر؟ (مثال: لندن، باريس، أمريكا...)"
-          className="h-12 border-0 bg-transparent text-white placeholder:text-navy-200 shadow-none focus-visible:ring-0"
+          className="h-12 border-0 bg-transparent text-navy-950 placeholder:text-muted-foreground shadow-none focus-visible:ring-0"
         />
-        <Button type="submit" variant="gold" className="hidden shrink-0 sm:inline-flex">
+        <Button type="submit" variant="default" className="hidden shrink-0 sm:inline-flex">
           ابحث
         </Button>
       </form>

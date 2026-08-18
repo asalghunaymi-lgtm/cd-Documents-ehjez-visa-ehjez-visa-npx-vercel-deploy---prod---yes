@@ -35,7 +35,7 @@ export function SiteHeader() {
               ملفي
             </Link>
           </Button>
-          <Button asChild variant="gold" size="default">
+          <Button asChild variant="default" size="default">
             <Link href="/apply">ابدأ طلب التأشيرة</Link>
           </Button>
         </div>
@@ -73,7 +73,7 @@ export function SiteHeader() {
                 ملفي
               </Link>
             </Button>
-            <Button asChild variant="gold" onClick={() => setOpen(false)}>
+            <Button asChild variant="default" onClick={() => setOpen(false)}>
               <Link href="/apply">ابدأ طلب التأشيرة</Link>
             </Button>
           </div>

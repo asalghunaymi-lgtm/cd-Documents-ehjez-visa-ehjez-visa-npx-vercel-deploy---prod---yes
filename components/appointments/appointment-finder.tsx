@@ -51,7 +51,7 @@ export function AppointmentFinder({ initialCountry }: { initialCountry?: string 
             </Alert>
 
             {country.officialBookingUrl && (
-              <Button asChild variant="gold" className="w-full">
+              <Button asChild variant="default" className="w-full">
                 <a href={country.officialBookingUrl} target="_blank" rel="noopener noreferrer">
                   الانتقال إلى منصة الحجز الرسمية
                   <ExternalLink className="size-4" />

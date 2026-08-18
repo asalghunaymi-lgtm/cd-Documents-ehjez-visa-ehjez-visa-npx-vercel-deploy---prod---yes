@@ -106,7 +106,7 @@ export function ApplyWizard() {
             من لوحة &quot;ملفي&quot;.
           </p>
           <div className="flex flex-col gap-2.5 sm:flex-row sm:justify-center">
-            <Button onClick={() => router.push("/documents")} variant="gold" size="lg">
+            <Button onClick={() => router.push("/documents")} variant="default" size="lg">
               رفع المستندات الآن
             </Button>
             <Button onClick={() => router.push("/dashboard")} variant="outline" size="lg">
@@ -279,7 +279,7 @@ export function ApplyWizard() {
                 <ChevronLeft className="size-4" />
               </Button>
             ) : (
-              <Button variant="gold" onClick={() => setSubmitted(true)}>
+              <Button variant="default" onClick={() => setSubmitted(true)}>
                 تأكيد وإنشاء الطلب
               </Button>
             )}
