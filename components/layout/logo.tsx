@@ -10,10 +10,10 @@ export function Logo({ className, dark }: { className?: string; dark?: boolean }
       </span>
       <span className="flex flex-col leading-none">
         <span className={cn("text-[17px] font-extrabold tracking-tight", dark ? "text-white" : "text-navy-950")}>
-          منفذ السعادة
+          وكالة منفذ السعادة للسفر والسياحة
         </span>
         <span className={cn("text-[10px] font-medium tracking-wide", dark ? "text-navy-300" : "text-muted-foreground")}>
-          Happiness Outlet
+          Munfadh Alsaada Agency for Travel and Tourism
         </span>
       </span>
     </Link>
