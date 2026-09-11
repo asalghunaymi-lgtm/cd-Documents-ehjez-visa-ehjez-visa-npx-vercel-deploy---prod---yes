@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./site-footer";
 import { DisclaimerBanner } from "./disclaimer-banner";
+import { WhatsappButton } from "./whatsapp-button";
 
 export function PublicChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +20,7 @@ export function PublicChrome({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
+      <WhatsappButton />
     </>
   );
 }

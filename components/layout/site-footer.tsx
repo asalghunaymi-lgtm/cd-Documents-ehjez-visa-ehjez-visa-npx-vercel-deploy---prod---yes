@@ -51,7 +51,10 @@ export function SiteFooter() {
           <h4 className="mb-4 text-sm font-bold text-white">تواصل معنا</h4>
           <ul className="space-y-3 text-sm text-navy-300">
             <li className="flex items-center gap-2">
-              <Phone className="size-4 text-gold-400" /> {siteConfig.supportPhone}
+              <Phone className="size-4 text-gold-400" />
+              <a href={`tel:${siteConfig.supportPhone}`} className="transition-colors hover:text-gold-400" dir="ltr">
+                {siteConfig.supportPhoneDisplay}
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="size-4 text-gold-400" /> {siteConfig.supportEmail}
