@@ -52,6 +52,7 @@ function schengenCountry(params: {
   nameEn: string;
   flagEmoji: string;
   gradient: string;
+  heroImagePath?: string;
   applicationCenterAr: string;
   officialUrl: string;
   officialLabel: string;
@@ -64,6 +65,7 @@ function schengenCountry(params: {
     nameEn: params.nameEn,
     flagEmoji: params.flagEmoji,
     heroImageGradient: params.gradient,
+    heroImagePath: params.heroImagePath,
     shortDescriptionAr: `دليلك الكامل للتقديم على تأشيرة ${params.nameAr} ضمن منطقة شنغن، من المتطلبات وحتى حجز الموعد الرسمي.`,
     visaTypes: [
       { slug: "tourism", nameAr: "سياحية", nameEn: "Tourism", descriptionAr: "للزيارات السياحية القصيرة حتى 90 يومًا." },
@@ -98,6 +100,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "France",
     flagEmoji: "🇫🇷",
     gradient: "from-navy-900 to-navy-700",
+    heroImagePath: "/countries/france.jpg",
     applicationCenterAr: "مركز TLScontact لتأشيرات فرنسا في الرياض وجدة",
     officialUrl: "https://france-visas.gouv.fr",
     officialLabel: "France-Visas — الموقع الرسمي",
@@ -109,6 +112,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Italy",
     flagEmoji: "🇮🇹",
     gradient: "from-navy-900 to-emerald-800",
+    heroImagePath: "/countries/italy.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات إيطاليا في الرياض وجدة",
     officialUrl: "https://vfsglobal.com/italy/saudiarabia",
     officialLabel: "VFS Global — إيطاليا",
@@ -120,6 +124,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Spain",
     flagEmoji: "🇪🇸",
     gradient: "from-navy-900 to-red-800",
+    heroImagePath: "/countries/spain.jpg",
     applicationCenterAr: "مركز BLS International لتأشيرات إسبانيا في الرياض وجدة",
     officialUrl: "https://blsspainvisa.com/saudiarabia",
     officialLabel: "BLS International — إسبانيا",
@@ -131,6 +136,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Germany",
     flagEmoji: "🇩🇪",
     gradient: "from-navy-900 to-zinc-700",
+    heroImagePath: "/countries/germany.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات ألمانيا في الرياض وجدة",
     officialUrl: "https://saudiarabia.diplo.de",
     officialLabel: "السفارة الألمانية — الموقع الرسمي",
@@ -142,6 +148,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Greece",
     flagEmoji: "🇬🇷",
     gradient: "from-navy-900 to-sky-800",
+    heroImagePath: "/countries/greece.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات اليونان في الرياض وجدة",
     officialUrl: "https://www.mfa.gr",
     officialLabel: "وزارة الخارجية اليونانية",
@@ -152,6 +159,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Austria",
     flagEmoji: "🇦🇹",
     gradient: "from-navy-900 to-red-900",
+    heroImagePath: "/countries/austria.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات النمسا في الرياض",
     officialUrl: "https://www.bmeia.gv.at",
     officialLabel: "وزارة الخارجية النمساوية",
@@ -162,6 +170,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Switzerland",
     flagEmoji: "🇨🇭",
     gradient: "from-navy-900 to-red-700",
+    heroImagePath: "/countries/switzerland.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات سويسرا في الرياض وجدة",
     officialUrl: "https://www.sem.admin.ch",
     officialLabel: "مكتب الهجرة الفيدرالي السويسري",
@@ -172,6 +181,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Netherlands",
     flagEmoji: "🇳🇱",
     gradient: "from-navy-900 to-orange-700",
+    heroImagePath: "/countries/netherlands.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات هولندا في الرياض",
     officialUrl: "https://www.netherlandsandyou.nl",
     officialLabel: "الحكومة الهولندية — الموقع الرسمي",
@@ -182,6 +192,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Belgium",
     flagEmoji: "🇧🇪",
     gradient: "from-navy-900 to-yellow-700",
+    heroImagePath: "/countries/belgium.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات بلجيكا في الرياض",
     officialUrl: "https://diplomatie.belgium.be",
     officialLabel: "وزارة الخارجية البلجيكية",
@@ -192,6 +203,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Portugal",
     flagEmoji: "🇵🇹",
     gradient: "from-navy-900 to-green-800",
+    heroImagePath: "/countries/portugal.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات البرتغال في الرياض",
     officialUrl: "https://vistos.mne.gov.pt",
     officialLabel: "البوابة الرسمية للتأشيرات البرتغالية",

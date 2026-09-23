@@ -29,6 +29,7 @@ export interface CountryVisaInfo {
   nameEn: string;
   flagEmoji: string;
   heroImageGradient: string;
+  heroImagePath?: string;
   shortDescriptionAr: string;
   visaTypes: VisaTypeSummary[];
   requirements: string[];

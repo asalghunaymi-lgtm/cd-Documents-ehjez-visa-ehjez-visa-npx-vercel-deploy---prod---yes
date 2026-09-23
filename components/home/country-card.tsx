@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { CountryVisaInfo } from "@/types";
 import { cn } from "@/lib/utils";
@@ -12,7 +13,20 @@ export function CountryCard({ country, size = "md" }: { country: CountryVisaInfo
         size === "lg" ? "aspect-[4/3]" : "aspect-square"
       )}
     >
-      <div className={cn("absolute inset-0 bg-gradient-to-br", country.heroImageGradient)} />
+      {country.heroImagePath ? (
+        <>
+          <Image
+            src={country.heroImagePath}
+            alt={country.nameAr}
+            fill
+            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/25 to-navy-950/10" />
+        </>
+      ) : (
+        <div className={cn("absolute inset-0 bg-gradient-to-br", country.heroImageGradient)} />
+      )}
 
       <div className="relative flex flex-1 flex-col justify-between p-4">
         <div className="flex items-start justify-between">
