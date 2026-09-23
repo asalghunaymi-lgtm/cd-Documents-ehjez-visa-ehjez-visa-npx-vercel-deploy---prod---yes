@@ -13,7 +13,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-white/90 backdrop-blur-md">
-      <div className="container-app flex h-[4.5rem] items-center justify-between py-3">
+      <div className="container-app flex h-20 items-center justify-between py-3">
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex">

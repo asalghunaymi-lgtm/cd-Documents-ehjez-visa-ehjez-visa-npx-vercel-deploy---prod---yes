@@ -10,7 +10,7 @@ export function Logo({ className, dark }: { className?: string; dark?: boolean }
       width={466}
       height={500}
       priority
-      className="h-11 w-auto object-contain"
+      className="h-16 w-auto object-contain"
     />
   );
 
