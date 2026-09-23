@@ -28,7 +28,7 @@ export function SmartSearch() {
           e.preventDefault();
           if (matches[0]) router.push(`/visa/${matches[0]!.slug}`);
         }}
-        className="flex items-center gap-2 rounded-2xl border border-border bg-white p-2 shadow-xs transition-colors focus-within:border-navy-300"
+        className="flex items-center gap-2 rounded-md border border-navy-200 bg-white p-2 transition-colors focus-within:border-navy-500"
       >
         <Search className="ms-2 size-5 shrink-0 text-navy-700" />
         <Input
@@ -45,7 +45,7 @@ export function SmartSearch() {
       </form>
 
       {focused && matches.length > 0 && (
-        <div className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-border bg-white shadow-xl">
+        <div className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-md border border-navy-200 bg-white">
           {matches.map((c) => (
             <button
               key={c!.slug}

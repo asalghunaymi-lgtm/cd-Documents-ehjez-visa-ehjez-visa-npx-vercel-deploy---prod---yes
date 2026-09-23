@@ -68,7 +68,7 @@ export function SiteFooter() {
 
       <div className="border-t border-white/10">
         <div className="container-app flex flex-col items-center justify-between gap-3 py-5 text-xs text-navy-400 sm:flex-row">
-          <p>© {year} احجز تأشيرتك. جميع الحقوق محفوظة.</p>
+          <p>© {year} منفذ السعادة. جميع الحقوق محفوظة.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-gold-400">سياسة الخصوصية</Link>
             <Link href="/terms" className="hover:text-gold-400">شروط الاستخدام</Link>

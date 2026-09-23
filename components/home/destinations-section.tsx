@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SectionKicker } from "@/components/ui/section-kicker";
 import { CountryCard } from "./country-card";
 import { SchengenHelper } from "./schengen-helper";
 import { getCountriesByRegion } from "@/lib/data/countries";
@@ -17,16 +18,16 @@ export function DestinationsSection() {
   return (
     <section className="py-16 sm:py-20">
       <div className="container-app">
-        <div className="mx-auto mb-10 max-w-2xl text-center">
-          <span className="text-xs font-bold uppercase tracking-wider text-gold-600">وجهاتنا</span>
-          <h2 className="mt-2 text-2xl font-extrabold text-navy-950 sm:text-3xl">اختر وجهتك بثقة</h2>
+        <div className="max-w-xl">
+          <SectionKicker>وجهاتنا</SectionKicker>
+          <h2 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">اختر وجهتك بثقة</h2>
           <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
             نغطي أهم وجهات السفر المطلوبة من المسافرين السعوديين، مع دليل واضح لمتطلبات كل دولة.
           </p>
         </div>
 
-        <Tabs defaultValue="schengen" className="items-center">
-          <TabsList className="mx-auto flex-wrap h-auto gap-1 py-1.5">
+        <Tabs defaultValue="schengen" className="mt-10 items-start">
+          <TabsList className="flex-wrap h-auto gap-1 py-1.5">
             {REGIONS.map((r) => (
               <TabsTrigger key={r.value} value={r.value}>
                 {r.label}

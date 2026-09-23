@@ -5,7 +5,7 @@ import { CountryCard } from "@/components/home/country-card";
 
 export const metadata: Metadata = {
   title: "الدول والتأشيرات",
-  description: "تصفح جميع الدول المتاحة ومتطلبات التأشيرة لكل دولة من منصة احجز تأشيرتك.",
+  description: "تصفح جميع الدول المتاحة ومتطلبات التأشيرة لكل دولة من منصة منفذ السعادة.",
 };
 
 export default function VisaIndexPage() {

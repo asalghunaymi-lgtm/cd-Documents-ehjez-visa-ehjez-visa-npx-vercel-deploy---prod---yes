@@ -8,18 +8,17 @@ export function CountryCard({ country, size = "md" }: { country: CountryVisaInfo
     <Link
       href={`/visa/${country.slug}`}
       className={cn(
-        "group relative flex flex-col justify-end overflow-hidden rounded-2xl border border-border bg-white card-elevated transition-transform hover:-translate-y-1",
+        "group relative flex flex-col justify-end overflow-hidden rounded-md border border-border transition-colors hover:border-navy-400",
         size === "lg" ? "aspect-[4/3]" : "aspect-square"
       )}
     >
-      <div className={cn("absolute inset-0 bg-gradient-to-br opacity-95", country.heroImageGradient)} />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_55%)]" />
+      <div className={cn("absolute inset-0 bg-gradient-to-br", country.heroImageGradient)} />
 
       <div className="relative flex flex-1 flex-col justify-between p-4">
         <div className="flex items-start justify-between">
           <span className="text-3xl drop-shadow-sm">{country.flagEmoji}</span>
           {country.popular && (
-            <span className="rounded-full bg-gold-400/90 px-2.5 py-0.5 text-[10px] font-bold text-navy-950">
+            <span className="rounded-sm bg-gold-400 px-2 py-0.5 text-[10px] font-bold text-navy-950">
               الأكثر طلبًا
             </span>
           )}

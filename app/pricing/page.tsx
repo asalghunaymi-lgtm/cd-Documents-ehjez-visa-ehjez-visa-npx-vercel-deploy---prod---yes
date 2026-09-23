@@ -4,21 +4,23 @@ import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PRICING_PLANS } from "@/lib/data/pricing";
+import { SectionKicker } from "@/components/ui/section-kicker";
 import { cn, formatSAR } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "خدماتنا",
-  description: "تعرّف على أسعار خدمات احجز تأشيرتك: تعبئة النموذج، مراجعة المستندات، تجهيز الطلب، وحجز الموعد.",
+  description: "تعرّف على أسعار خدمات منفذ السعادة: تعبئة النموذج، مراجعة المستندات، تجهيز الطلب، وحجز الموعد.",
 };
 
 export default function PricingPage() {
   return (
     <div className="py-14 sm:py-20">
       <div className="container-app">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">خدماتنا</h1>
+        <div className="mb-12 max-w-xl">
+          <SectionKicker>خدماتنا</SectionKicker>
+          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">أسعار واضحة لكل خدمة</h1>
           <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-            أسعار واضحة لكل خدمة، منفصلة تمامًا عن الرسوم الحكومية التي تُدفع مباشرة للجهة الرسمية.
+            منفصلة تمامًا عن الرسوم الحكومية التي تُدفع مباشرة للجهة الرسمية.
           </p>
         </div>
 
@@ -62,7 +64,7 @@ export default function PricingPage() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-[13px] text-muted-foreground">
+        <p className="mt-10 max-w-2xl text-[13px] text-muted-foreground">
           الرسوم الحكومية للسفارات والقنصليات منفصلة تمامًا عن رسوم خدمة المنصة، وتُعرض بوضوح قبل أي عملية دفع.
         </p>
       </div>

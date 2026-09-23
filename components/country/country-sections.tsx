@@ -118,7 +118,7 @@ export function OfficialSourceCard({ country }: { country: CountryVisaInfo }) {
           </a>
         </Button>
         <p className="mt-3 text-[11.5px] leading-5 text-navy-600">
-          احجز تأشيرتك ليست الجهة الرسمية المصدرة للتأشيرة. جميع البيانات هنا للمساعدة والتوجيه فقط.
+          منفذ السعادة ليست الجهة الرسمية المصدرة للتأشيرة. جميع البيانات هنا للمساعدة والتوجيه فقط.
         </p>
       </CardContent>
     </Card>

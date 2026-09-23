@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "سياسة الخصوصية",
-  description: "سياسة الخصوصية وحماية البيانات في منصة احجز تأشيرتك.",
+  description: "سياسة الخصوصية وحماية البيانات في منصة منفذ السعادة.",
 };
 
 const SECTIONS = [

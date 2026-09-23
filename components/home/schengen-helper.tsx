@@ -18,7 +18,7 @@ export function SchengenHelper() {
   const recommended = equalStay ? firstEntry : longestStay;
 
   return (
-    <div className="rounded-2xl border border-gold-200 bg-gold-50/60 p-5 sm:p-6">
+    <div className="rounded-lg border border-gold-200 bg-gold-50/60 p-5 sm:p-6">
       <div className="mb-4 flex items-center gap-2.5">
         <Compass className="size-5 text-gold-700" />
         <h3 className="text-[15px] font-bold text-navy-900">ما هي وجهتك الرئيسية داخل منطقة شنغن؟</h3>

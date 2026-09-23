@@ -13,7 +13,7 @@ export function CountryHero({ country }: { country: CountryVisaInfo }) {
           ← جميع الدول
         </Link>
         <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-          <span className="flex size-20 items-center justify-center rounded-2xl bg-white/10 text-5xl backdrop-blur-sm">
+          <span className="flex size-20 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-5xl">
             {country.flagEmoji}
           </span>
           <div>

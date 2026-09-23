@@ -12,7 +12,7 @@ export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-white">
       <div className="container-app flex h-20 items-center justify-between py-3">
         <Logo />
 
@@ -21,7 +21,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-4 py-2 text-sm font-semibold text-navy-700 transition-colors hover:bg-navy-50 hover:text-navy-900"
+              className="relative px-4 py-2 text-sm font-semibold text-navy-700 transition-colors after:absolute after:inset-x-4 after:bottom-1 after:h-[2px] after:scale-x-0 after:bg-gold-500 after:transition-transform after:content-[''] hover:text-navy-950 hover:after:scale-x-100"
             >
               {item.label}
             </Link>
