@@ -32,20 +32,51 @@ export const metadata: Metadata = {
     title: siteConfig.nameAr,
     siteName: siteConfig.nameAr,
     description: siteConfig.descriptionAr,
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.nameAr,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.nameAr,
     description: siteConfig.descriptionAr,
+    images: ["/og-image.jpg"],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  name: siteConfig.nameAr,
+  alternateName: siteConfig.nameEn,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/logo.png`,
+  image: `${siteConfig.url}/og-image.jpg`,
+  description: siteConfig.descriptionAr,
+  telephone: siteConfig.supportPhone,
+  email: siteConfig.supportEmail,
+  areaServed: "SA",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "SA",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-white text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <PublicChrome>{children}</PublicChrome>
       </body>
     </html>

@@ -4,7 +4,7 @@ export const siteConfig = {
   tagline: "نرتب لك طريق التأشيرة… وأنت خطط لرحلتك",
   descriptionAr:
     "منصة سعودية تساعدك على تجهيز طلب التأشيرة من اختيار الدولة ومعرفة المتطلبات، حتى رفع المستندات والوصول إلى قنوات التقديم والحجز الرسمية.",
-  url: "https://www.ehjez-visa.sa",
+  url: "https://munfadhalsaada.app",
   supportPhone: "+966559641419",
   supportPhoneDisplay: "+966 55 964 1419",
   whatsappLink: "https://wa.me/966559641419",
