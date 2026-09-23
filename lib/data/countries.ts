@@ -114,8 +114,8 @@ export const COUNTRIES: CountryVisaInfo[] = [
     gradient: "from-navy-900 to-emerald-800",
     heroImagePath: "/countries/italy.jpg",
     applicationCenterAr: "مركز VFS Global لتأشيرات إيطاليا في الرياض وجدة",
-    officialUrl: "https://vfsglobal.com/italy/saudiarabia",
-    officialLabel: "VFS Global — إيطاليا",
+    officialUrl: "https://ambriad.esteri.it/ar/chi-siamo/gli-uffici/cancelleria-consolare-dellambasciata-ditalia-a-riad/",
+    officialLabel: "السفارة الإيطالية — الموقع الرسمي",
     popular: true,
   }),
   schengenCountry({
