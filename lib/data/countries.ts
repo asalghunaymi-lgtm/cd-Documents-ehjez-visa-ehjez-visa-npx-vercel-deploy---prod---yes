@@ -217,6 +217,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "United Kingdom",
     flagEmoji: "🇬🇧",
     heroImageGradient: "from-navy-950 to-navy-800",
+    heroImagePath: "/countries/uk.jpg",
     shortDescriptionAr: "دليلك لتأشيرة بريطانيا بأنواعها من السياحة إلى الدراسة، مع خطوات التقديم عبر UKVI ومراكز TLScontact.",
     visaTypes: [
       { slug: "tourism", nameAr: "سياحية (Standard Visitor)", nameEn: "Tourism", descriptionAr: "للزيارات السياحية حتى 6 أشهر." },
@@ -269,6 +270,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "United States",
     flagEmoji: "🇺🇸",
     heroImageGradient: "from-navy-950 to-blue-900",
+    heroImagePath: "/countries/usa.jpg",
     shortDescriptionAr: "نساعدك في تجهيز نموذج DS-160 والمستندات ومتابعة ملف موعد السفارة الأمريكية، دون أي حجز آلي للموعد.",
     visaTypes: [
       { slug: "b1-b2", nameAr: "B1/B2 (زيارة/سياحة)", nameEn: "B1/B2", descriptionAr: "للسياحة والزيارة والأعمال قصيرة المدى." },
@@ -319,6 +321,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Australia",
     flagEmoji: "🇦🇺",
     heroImageGradient: "from-navy-950 to-amber-900",
+    heroImagePath: "/countries/australia.jpg",
     shortDescriptionAr: "دليل التقديم على تأشيرات أستراليا للزيارة والدراسة والأعمال عبر النظام الإلكتروني الرسمي ImmiAccount.",
     visaTypes: [
       { slug: "visitor", nameAr: "زيارة (Visitor 600)", nameEn: "Visitor", descriptionAr: "للسياحة وزيارة الأقارب." },
@@ -361,6 +364,7 @@ export const COUNTRIES: CountryVisaInfo[] = [
     nameEn: "Canada",
     flagEmoji: "🇨🇦",
     heroImageGradient: "from-navy-950 to-red-900",
+    heroImagePath: "/countries/canada.jpg",
     shortDescriptionAr: "نرافقك في تجهيز طلب تأشيرة كندا للزيارة أو الدراسة أو العمل عبر النظام الإلكتروني الرسمي IRCC.",
     visaTypes: [
       { slug: "visitor", nameAr: "زيارة (Visitor Visa)", nameEn: "Visitor Visa", descriptionAr: "للسياحة وزيارة الأقارب حتى 6 أشهر." },
