@@ -1,10 +1,14 @@
-import Link from "next/link";
+"use client";
+
+import Link from "@/components/i18n/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { CountryVisaInfo } from "@/types";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/client";
 
 export function CountryCard({ country, size = "md" }: { country: CountryVisaInfo; size?: "md" | "lg" }) {
+  const { t } = useI18n();
   return (
     <Link
       href={`/visa/${country.slug}`}
@@ -33,7 +37,7 @@ export function CountryCard({ country, size = "md" }: { country: CountryVisaInfo
           <span className="text-3xl drop-shadow-sm">{country.flagEmoji}</span>
           {country.popular && (
             <span className="rounded-sm bg-gold-400 px-2 py-0.5 text-[10px] font-bold text-navy-950">
-              الأكثر طلبًا
+              {t.common.popular}
             </span>
           )}
         </div>
@@ -41,8 +45,8 @@ export function CountryCard({ country, size = "md" }: { country: CountryVisaInfo
         <div>
           <h3 className="text-base font-bold text-white">{country.nameAr}</h3>
           <div className="mt-1 flex items-center gap-1 text-[12px] font-medium text-white/80 opacity-0 transition-opacity group-hover:opacity-100">
-            اعرف المتطلبات
-            <ArrowLeft className="size-3.5" />
+            {t.common.learnRequirements}
+            <ArrowLeft className="size-3.5 ltr:-scale-x-100" />
           </div>
         </div>
       </div>

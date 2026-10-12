@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Link from "@/components/i18n/link";
+import { getI18n } from "@/lib/i18n/server";
 import { CheckCircle2, FileText, ExternalLink, AlertTriangle, ListChecks } from "lucide-react";
 import { CountryVisaInfo } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,17 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-export function VisaTypesSection({ country }: { country: CountryVisaInfo }) {
+export async function VisaTypesSection({ country }: { country: CountryVisaInfo }) {
+  const { t, locale } = await getI18n();
   return (
     <section>
-      <h2 className="mb-4 text-lg font-extrabold text-navy-950">أنواع التأشيرات المتاحة</h2>
+      <h2 className="mb-4 text-lg font-extrabold text-navy-950">{t.country.visaTypes}</h2>
       <div className="grid gap-3 sm:grid-cols-2">
         {country.visaTypes.map((v) => (
           <Card key={v.slug}>
             <CardContent className="p-5">
               <div className="mb-1 flex items-center justify-between">
                 <h3 className="font-bold text-navy-900">{v.nameAr}</h3>
-                <Badge variant="outline">{v.nameEn}</Badge>
+                {locale === "ar" && <Badge variant="outline">{v.nameEn}</Badge>}
               </div>
               <p className="text-[13px] leading-6 text-muted-foreground">{v.descriptionAr}</p>
             </CardContent>
@@ -28,11 +30,12 @@ export function VisaTypesSection({ country }: { country: CountryVisaInfo }) {
   );
 }
 
-export function RequirementsSection({ country }: { country: CountryVisaInfo }) {
+export async function RequirementsSection({ country }: { country: CountryVisaInfo }) {
+  const { t } = await getI18n();
   return (
     <section>
       <h2 className="mb-4 flex items-center gap-2 text-lg font-extrabold text-navy-950">
-        <ListChecks className="size-5 text-gold-600" /> المتطلبات
+        <ListChecks className="size-5 text-gold-600" /> {t.country.requirements}
       </h2>
       <ul className="space-y-2.5">
         {country.requirements.map((r) => (
@@ -46,11 +49,12 @@ export function RequirementsSection({ country }: { country: CountryVisaInfo }) {
   );
 }
 
-export function DocumentsPreviewSection({ country }: { country: CountryVisaInfo }) {
+export async function DocumentsPreviewSection({ country }: { country: CountryVisaInfo }) {
+  const { t } = await getI18n();
   return (
     <section>
       <h2 className="mb-4 flex items-center gap-2 text-lg font-extrabold text-navy-950">
-        <FileText className="size-5 text-gold-600" /> المستندات المطلوبة
+        <FileText className="size-5 text-gold-600" /> {t.country.documents}
       </h2>
       <div className="flex flex-wrap gap-2">
         {country.documents.map((d) => (
@@ -60,20 +64,21 @@ export function DocumentsPreviewSection({ country }: { country: CountryVisaInfo 
         ))}
       </div>
       <p className="mt-3 text-[13px] text-muted-foreground">
-        يمكنك رفع جميع مستنداتك مباشرة بعد بدء طلبك عبر صفحة{" "}
+        {t.country.documentsNoteStart}{" "}
         <Link href="/documents" className="font-semibold text-navy-800 underline">
-          رفع المستندات
+          {t.country.documentsNoteLink}
         </Link>
-        .
+        {t.country.documentsNoteEnd}
       </p>
     </section>
   );
 }
 
-export function ApplicationStepsSection({ country }: { country: CountryVisaInfo }) {
+export async function ApplicationStepsSection({ country }: { country: CountryVisaInfo }) {
+  const { t } = await getI18n();
   return (
     <section>
-      <h2 className="mb-5 text-lg font-extrabold text-navy-950">خطوات التقديم</h2>
+      <h2 className="mb-5 text-lg font-extrabold text-navy-950">{t.country.steps}</h2>
       <ol className="space-y-5 border-e-2 border-navy-100 pe-6">
         {country.applicationSteps.map((step, i) => (
           <li key={step} className="relative">
@@ -88,11 +93,12 @@ export function ApplicationStepsSection({ country }: { country: CountryVisaInfo 
   );
 }
 
-export function FaqSection({ country }: { country: CountryVisaInfo }) {
+export async function FaqSection({ country }: { country: CountryVisaInfo }) {
   if (!country.faqs.length) return null;
+  const { t } = await getI18n();
   return (
     <section>
-      <h2 className="mb-4 text-lg font-extrabold text-navy-950">أسئلة شائعة عن تأشيرة {country.nameAr}</h2>
+      <h2 className="mb-4 text-lg font-extrabold text-navy-950">{t.country.faqTitle(country.nameAr)}</h2>
       <Accordion type="single" collapsible className="rounded-xl border border-border bg-white px-5">
         {country.faqs.map((f) => (
           <AccordionItem key={f.question} value={f.question}>
@@ -105,32 +111,34 @@ export function FaqSection({ country }: { country: CountryVisaInfo }) {
   );
 }
 
-export function OfficialSourceCard({ country }: { country: CountryVisaInfo }) {
+export async function OfficialSourceCard({ country }: { country: CountryVisaInfo }) {
+  const { t } = await getI18n();
   return (
     <Card className="border-gold-200 bg-gold-50/50">
       <CardContent className="p-5">
-        <h3 className="mb-1 text-sm font-bold text-navy-900">المصدر الرسمي</h3>
+        <h3 className="mb-1 text-sm font-bold text-navy-900">{t.country.officialSource}</h3>
         <p className="mb-3 text-[13px] leading-6 text-navy-700">{country.officialSource.labelAr}</p>
         <Button asChild variant="default" size="sm" className="w-full">
           <a href={country.officialSource.url} target="_blank" rel="noopener noreferrer">
-            الانتقال إلى الموقع الرسمي
+            {t.country.goToOfficial}
             <ExternalLink className="size-3.5" />
           </a>
         </Button>
         <p className="mt-3 text-[11.5px] leading-5 text-navy-600">
-          منفذ السعادة ليست الجهة الرسمية المصدرة للتأشيرة. جميع البيانات هنا للمساعدة والتوجيه فقط.
+          {t.country.officialDisclaimer}
         </p>
       </CardContent>
     </Card>
   );
 }
 
-export function ImportantNotesSection({ country }: { country: CountryVisaInfo }) {
+export async function ImportantNotesSection({ country }: { country: CountryVisaInfo }) {
   if (!country.importantNotesAr.length) return null;
+  const { t } = await getI18n();
   return (
     <Alert variant="warning">
       <AlertTriangle className="size-4" />
-      <AlertTitle>تنبيهات مهمة</AlertTitle>
+      <AlertTitle>{t.country.importantNotes}</AlertTitle>
       <AlertDescription>
         <ul className="mt-1.5 space-y-1.5">
           {country.importantNotesAr.map((n) => (

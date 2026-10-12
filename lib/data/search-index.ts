@@ -1,20 +1,20 @@
 // فهرس بحث ذكي مبسّط: يربط أسماء مدن/كلمات شائعة بالدولة المناسبة.
 // في نسخة لاحقة يمكن استبداله بخدمة بحث فعلية أو نموذج NLP بسيط.
 export const SEARCH_SYNONYMS: { keywords: string[]; countrySlug: string }[] = [
-  { keywords: ["لندن", "بريطانيا", "انجلترا", "إنجلترا", "المملكة المتحدة", "london", "uk"], countrySlug: "uk" },
+  { keywords: ["لندن", "بريطانيا", "انجلترا", "إنجلترا", "المملكة المتحدة", "london", "uk", "united kingdom", "england", "britain"], countrySlug: "uk" },
   { keywords: ["باريس", "فرنسا", "paris", "france"], countrySlug: "france" },
-  { keywords: ["روما", "ميلانو", "إيطاليا", "ايطاليا", "italy", "rome"], countrySlug: "italy" },
-  { keywords: ["مدريد", "برشلونة", "إسبانيا", "اسبانيا", "spain"], countrySlug: "spain" },
-  { keywords: ["برلين", "ميونخ", "ألمانيا", "المانيا", "germany"], countrySlug: "germany" },
-  { keywords: ["أثينا", "اثينا", "سانتوريني", "اليونان", "greece"], countrySlug: "greece" },
-  { keywords: ["فيينا", "النمسا", "austria"], countrySlug: "austria" },
-  { keywords: ["زيورخ", "جنيف", "سويسرا", "switzerland"], countrySlug: "switzerland" },
-  { keywords: ["أمستردام", "امستردام", "هولندا", "netherlands"], countrySlug: "netherlands" },
-  { keywords: ["بروكسل", "بلجيكا", "belgium"], countrySlug: "belgium" },
-  { keywords: ["لشبونة", "البرتغال", "portugal"], countrySlug: "portugal" },
-  { keywords: ["نيويورك", "واشنطن", "لوس انجلوس", "أمريكا", "امريكا", "الولايات المتحدة", "usa", "america"], countrySlug: "usa" },
-  { keywords: ["سيدني", "ملبورن", "استراليا", "أستراليا", "australia"], countrySlug: "australia" },
-  { keywords: ["تورونتو", "فانكوفر", "كندا", "canada"], countrySlug: "canada" },
+  { keywords: ["روما", "ميلانو", "إيطاليا", "ايطاليا", "italy", "rome", "milan", "venice", "florence"], countrySlug: "italy" },
+  { keywords: ["مدريد", "برشلونة", "إسبانيا", "اسبانيا", "spain", "madrid", "barcelona"], countrySlug: "spain" },
+  { keywords: ["برلين", "ميونخ", "ألمانيا", "المانيا", "germany", "berlin", "munich", "frankfurt"], countrySlug: "germany" },
+  { keywords: ["أثينا", "اثينا", "سانتوريني", "اليونان", "greece", "athens", "santorini"], countrySlug: "greece" },
+  { keywords: ["فيينا", "النمسا", "austria", "vienna", "salzburg"], countrySlug: "austria" },
+  { keywords: ["زيورخ", "جنيف", "سويسرا", "switzerland", "zurich", "geneva", "interlaken"], countrySlug: "switzerland" },
+  { keywords: ["أمستردام", "امستردام", "هولندا", "netherlands", "holland", "amsterdam"], countrySlug: "netherlands" },
+  { keywords: ["بروكسل", "بلجيكا", "belgium", "brussels", "bruges"], countrySlug: "belgium" },
+  { keywords: ["لشبونة", "البرتغال", "portugal", "lisbon", "porto"], countrySlug: "portugal" },
+  { keywords: ["نيويورك", "واشنطن", "لوس انجلوس", "أمريكا", "امريكا", "الولايات المتحدة", "usa", "america", "united states", "new york", "washington", "los angeles"], countrySlug: "usa" },
+  { keywords: ["سيدني", "ملبورن", "استراليا", "أستراليا", "australia", "sydney", "melbourne"], countrySlug: "australia" },
+  { keywords: ["تورونتو", "فانكوفر", "كندا", "canada", "toronto", "vancouver", "montreal"], countrySlug: "canada" },
 ];
 
 export function searchCountryByQuery(query: string) {

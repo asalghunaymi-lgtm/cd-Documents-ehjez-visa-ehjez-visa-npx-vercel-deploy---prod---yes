@@ -1,3 +1,6 @@
+import type { Locale } from "@/lib/i18n/config";
+import { SITE_FAQS_EN } from "@/lib/i18n/content/site.en";
+
 export const SITE_FAQS = [
   {
     question: "هل منفذ السعادة جهة حكومية؟",
@@ -46,3 +49,8 @@ export const SITE_FAQS = [
     answer: "يمكنك تقديم طلب حذف بياناتك في أي وقت من خلال حسابك أو التواصل مع فريق الدعم، وسيتم ذلك وفق سياسة الاحتفاظ بالبيانات المعلنة.",
   },
 ];
+
+/** FAQs in the requested language (Arabic by default). */
+export function getSiteFaqs(locale: Locale = "ar") {
+  return locale === "en" ? SITE_FAQS_EN : SITE_FAQS;
+}

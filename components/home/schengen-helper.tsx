@@ -1,16 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getCountriesByRegion } from "@/lib/data/countries";
+import { useI18n, useLocalizedRouter } from "@/lib/i18n/client";
 
 export function SchengenHelper() {
-  const router = useRouter();
-  const schengenCountries = getCountriesByRegion("schengen");
+  const router = useLocalizedRouter();
+  const { t, locale } = useI18n();
+  const c = t.home.schengenHelper;
+  const schengenCountries = getCountriesByRegion("schengen", locale);
   const [longestStay, setLongestStay] = React.useState<string>("");
   const [equalStay, setEqualStay] = React.useState(false);
   const [firstEntry, setFirstEntry] = React.useState<string>("");
@@ -21,28 +23,30 @@ export function SchengenHelper() {
     <div className="rounded-lg border border-gold-200 bg-gold-50/60 p-5 sm:p-6">
       <div className="mb-4 flex items-center gap-2.5">
         <Compass className="size-5 text-gold-700" />
-        <h3 className="text-[15px] font-bold text-navy-900">ما هي وجهتك الرئيسية داخل منطقة شنغن؟</h3>
+        <h3 className="text-[15px] font-bold text-navy-900">{c.title}</h3>
       </div>
 
       <p className="mb-4 text-[13px] leading-6 text-navy-700">
-        لا يمكنك اختيار أي دولة شنغن عشوائيًا. إذا كنت ستزور أكثر من دولة، يجب التقديم عبر
-        <b> الدولة التي ستقضي فيها أطول مدة</b>، وإذا تساوت المدد فالعبرة
-        <b> بدولة الدخول الأول</b>.
+        {c.introStart}
+        <b>{c.introLongest}</b>
+        {c.introMiddle}
+        <b>{c.introFirstEntry}</b>
+        {c.introEnd}
       </p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-semibold text-navy-800">
-            الدولة التي ستقضي فيها أطول مدة
+            {c.longestStayLabel}
           </label>
           <Select value={longestStay} onValueChange={setLongestStay}>
             <SelectTrigger>
-              <SelectValue placeholder="اختر الدولة" />
+              <SelectValue placeholder={t.common.chooseCountry} />
             </SelectTrigger>
             <SelectContent>
-              {schengenCountries.map((c) => (
-                <SelectItem key={c.slug} value={c.slug}>
-                  {c.flagEmoji} {c.nameAr}
+              {schengenCountries.map((country) => (
+                <SelectItem key={country.slug} value={country.slug}>
+                  {country.flagEmoji} {country.nameAr}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -57,16 +61,16 @@ export function SchengenHelper() {
               checked={equalStay}
               onChange={(e) => setEqualStay(e.target.checked)}
             />
-            المدد متساوية بين أكثر من دولة؟
+            {c.equalStayLabel}
           </label>
           <Select value={firstEntry} onValueChange={setFirstEntry} disabled={!equalStay}>
             <SelectTrigger>
-              <SelectValue placeholder="دولة الدخول الأول" />
+              <SelectValue placeholder={c.firstEntryPlaceholder} />
             </SelectTrigger>
             <SelectContent>
-              {schengenCountries.map((c) => (
-                <SelectItem key={c.slug} value={c.slug}>
-                  {c.flagEmoji} {c.nameAr}
+              {schengenCountries.map((country) => (
+                <SelectItem key={country.slug} value={country.slug}>
+                  {country.flagEmoji} {country.nameAr}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -76,10 +80,10 @@ export function SchengenHelper() {
 
       {recommended && (
         <Alert variant="gold" className="mt-4">
-          <AlertTitle>وجهتك الصحيحة للتقديم</AlertTitle>
+          <AlertTitle>{c.resultTitle}</AlertTitle>
           <AlertDescription>
-            بناءً على إجاباتك، يجب عليك التقديم عبر{" "}
-            <b>{schengenCountries.find((c) => c.slug === recommended)?.nameAr}</b>.
+            {c.resultPrefix}{" "}
+            <b>{schengenCountries.find((country) => country.slug === recommended)?.nameAr}</b>.
           </AlertDescription>
         </Alert>
       )}
@@ -90,7 +94,7 @@ export function SchengenHelper() {
         disabled={!recommended}
         onClick={() => recommended && router.push(`/visa/${recommended}`)}
       >
-        متابعة إلى صفحة الدولة
+        {c.continue}
       </Button>
     </div>
   );

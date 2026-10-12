@@ -6,18 +6,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { COUNTRIES } from "@/lib/data/countries";
+import { getCountries } from "@/lib/data/countries";
+import { useI18n } from "@/lib/i18n/client";
 
 export function AppointmentFinder({ initialCountry }: { initialCountry?: string }) {
   const [slug, setSlug] = React.useState(initialCountry ?? "");
+  const { t, locale } = useI18n();
+  const a = t.appointments;
+  const COUNTRIES = getCountries(locale);
   const country = COUNTRIES.find((c) => c.slug === slug);
 
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-semibold text-navy-800">اختر الدولة</label>
+      <label className="mb-1.5 block text-xs font-semibold text-navy-800">{a.chooseCountry}</label>
       <Select value={slug} onValueChange={setSlug}>
         <SelectTrigger>
-          <SelectValue placeholder="اختر الدولة" />
+          <SelectValue placeholder={a.chooseCountry} />
         </SelectTrigger>
         <SelectContent>
           {COUNTRIES.map((c) => (
@@ -36,24 +40,23 @@ export function AppointmentFinder({ initialCountry }: { initialCountry?: string 
                 <Building2 className="size-5 text-navy-700" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-navy-900">مركز التقديم المعتمد</h3>
+                <h3 className="text-sm font-bold text-navy-900">{a.centre}</h3>
                 <p className="text-[13px] text-muted-foreground">{country.applicationCenterAr}</p>
               </div>
             </div>
 
             <Alert>
               <Info className="size-4" />
-              <AlertTitle>لا نخترع مواعيد</AlertTitle>
+              <AlertTitle>{a.noInventedTitle}</AlertTitle>
               <AlertDescription>
-                لا تتوفر لدينا حاليًا بيانات مباشرة من واجهة برمجية رسمية لعرض أقرب موعد متاح. للحصول على أحدث
-                المواعيد المتوفرة، انتقل مباشرة إلى منصة الحجز الرسمية أدناه.
+                {a.noInventedBody}
               </AlertDescription>
             </Alert>
 
             {country.officialBookingUrl && (
               <Button asChild variant="default" className="w-full">
                 <a href={country.officialBookingUrl} target="_blank" rel="noopener noreferrer">
-                  الانتقال إلى منصة الحجز الرسمية
+                  {a.goToBooking}
                   <ExternalLink className="size-4" />
                 </a>
               </Button>

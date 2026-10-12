@@ -3,15 +3,33 @@
 import * as React from "react";
 import { ShieldCheck, Info } from "lucide-react";
 import { DocumentUploadCard } from "./document-upload-card";
-import { BASE_DOCUMENT_REQUIREMENTS } from "@/lib/data/document-requirements";
+import { getDocumentRequirements } from "@/lib/data/document-requirements";
+import { useI18n } from "@/lib/i18n/client";
+import Link from "@/components/i18n/link";
 import { UploadedDocument } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const MAX_SIZE_MB = 10;
 
+type UploadNoteKey = "unsupportedType" | "tooLarge" | "unclear";
+
+/** Turns the stored note key into text in the current language. */
+function noteToText(
+  file: UploadedDocument | null,
+  errors: { unsupportedType: string; tooLarge: (mb: number) => string; unclear: string }
+): UploadedDocument | null {
+  if (!file?.employeeNote) return file;
+  const key = file.employeeNote as UploadNoteKey;
+  const text = key === "tooLarge" ? errors.tooLarge(MAX_SIZE_MB) : errors[key];
+  return { ...file, employeeNote: text ?? file.employeeNote };
+}
+
 export function DocumentChecklist() {
   const [files, setFiles] = React.useState<Record<string, UploadedDocument | null>>({});
+  const { t, locale } = useI18n();
+  const d = t.documents;
+  const BASE_DOCUMENT_REQUIREMENTS = getDocumentRequirements(locale);
 
   const requiredItems = BASE_DOCUMENT_REQUIREMENTS.filter((r) => r.required);
   const uploadedRequiredCount = requiredItems.filter((r) => {
@@ -27,17 +45,18 @@ export function DocumentChecklist() {
     const looksUnclear = file.size < 15 * 1024; // فحص أولي مبسّط لوضوح/اكتمال الملف
 
     let status: UploadedDocument["status"] = "uploaded";
-    let note: string | undefined;
+    // Store a message key, not text, so the note follows later language switches.
+    let note: UploadNoteKey | undefined;
 
     if (!isAllowedType) {
       status = "rejected";
-      note = "صيغة الملف غير مدعومة. الرجاء رفع صورة (JPG/PNG) أو ملف PDF.";
+      note = "unsupportedType";
     } else if (tooBig) {
       status = "rejected";
-      note = `حجم الملف أكبر من ${MAX_SIZE_MB} ميجابايت المسموح بها.`;
+      note = "tooLarge";
     } else if (looksUnclear) {
       status = "needs_review";
-      note = "يبدو أن المستند غير مكتمل أو غير واضح، يرجى رفع نسخة أوضح.";
+      note = "unclear";
     }
 
     setFiles((prev) => ({
@@ -60,21 +79,20 @@ export function DocumentChecklist() {
     <div>
       <div className="mb-6 rounded-2xl border border-border bg-white p-5">
         <div className="mb-2 flex items-center justify-between">
-          <h2 className="text-sm font-bold text-navy-900">اكتمال المستندات الأساسية</h2>
+          <h2 className="text-sm font-bold text-navy-900">{d.completeness}</h2>
           <span className="text-sm font-extrabold text-navy-900">{progress}%</span>
         </div>
         <Progress value={progress} />
         <p className="mt-2 text-[12.5px] text-muted-foreground">
-          {uploadedRequiredCount} من {requiredItems.length} مستندات أساسية مرفوعة
+          {d.progress(uploadedRequiredCount, requiredItems.length)}
         </p>
       </div>
 
       <Alert className="mb-6">
         <Info className="size-4" />
-        <AlertTitle>كيف يتم فحص مستنداتك؟</AlertTitle>
+        <AlertTitle>{d.checkTitle}</AlertTitle>
         <AlertDescription>
-          يقوم النظام بفحص أولي لنوع وحجم ووضوح الملف عند الرفع، ثم يراجعه فريقنا يدويًا. هذا الفحص لا يضمن قبول
-          السفارة للمستند نهائيًا.
+          {d.checkBody}
         </AlertDescription>
       </Alert>
 
@@ -83,7 +101,7 @@ export function DocumentChecklist() {
           <DocumentUploadCard
             key={req.key}
             requirement={req}
-            file={files[req.key] ?? null}
+            file={noteToText(files[req.key] ?? null, d.errors)}
             onUpload={(file) => handleUpload(req.key, file)}
             onRemove={() => handleRemove(req.key)}
           />
@@ -92,8 +110,11 @@ export function DocumentChecklist() {
 
       <div className="mt-6 flex items-center gap-2 rounded-xl bg-navy-50 p-4 text-[12.5px] text-navy-700">
         <ShieldCheck className="size-4 shrink-0 text-navy-600" />
-        جميع مستنداتك تُخزَّن بشكل آمن ومشفّر، ولا يمكن لأي عميل آخر الوصول إليها. راجع{" "}
-        <a href="/privacy" className="font-semibold underline">سياسة الخصوصية</a>.
+        <span>
+          {d.securityStart}{" "}
+          <Link href="/privacy" className="font-semibold underline">{d.securityLink}</Link>
+          {d.securityEnd}
+        </span>
       </div>
     </div>
   );

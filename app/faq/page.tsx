@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { SITE_FAQS } from "@/lib/data/faq";
+import { getSiteFaqs } from "@/lib/data/faq";
+import { getI18n } from "@/lib/i18n/server";
 import { SectionKicker } from "@/components/ui/section-kicker";
 
-export const metadata: Metadata = {
-  title: "الأسئلة الشائعة",
-  description: "إجابات على أكثر الأسئلة شيوعًا حول خدمات منفذ السعادة.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t.faq.metaTitle, description: t.faq.metaDescription };
+}
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const { t, locale } = await getI18n();
+  const SITE_FAQS = getSiteFaqs(locale);
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -24,9 +27,9 @@ export default function FaqPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <div className="container-app max-w-3xl">
         <div className="mb-10">
-          <SectionKicker>الأسئلة الشائعة</SectionKicker>
-          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">كل ما تحتاج معرفته</h1>
-          <p className="mt-3 text-[15px] text-muted-foreground">إجابات مباشرة عن خدمات منفذ السعادة.</p>
+          <SectionKicker>{t.faq.kicker}</SectionKicker>
+          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">{t.faq.title}</h1>
+          <p className="mt-3 text-[15px] text-muted-foreground">{t.faq.lead}</p>
         </div>
 
         <Accordion type="single" collapsible className="rounded-lg border border-border bg-white px-6">

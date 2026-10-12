@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { DocumentRequirementItem, DocumentStatus, UploadedDocument } from "@/types";
 import { cn } from "@/lib/utils";
 import { formatArabicDate } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/client";
 
-const STATUS_META: Record<DocumentStatus, { label: string; dot: string; badge: "default" | "success" | "warning" | "destructive" }> = {
-  missing: { label: "لم يتم الرفع", dot: "bg-red-500", badge: "destructive" },
-  uploaded: { label: "تم الرفع", dot: "bg-emerald-500", badge: "success" },
-  needs_review: { label: "يحتاج مراجعة", dot: "bg-amber-500", badge: "warning" },
-  approved: { label: "تم القبول", dot: "bg-emerald-500", badge: "success" },
-  rejected: { label: "مرفوض - أعد الرفع", dot: "bg-red-500", badge: "destructive" },
+const STATUS_META: Record<DocumentStatus, { dot: string; badge: "default" | "success" | "warning" | "destructive" }> = {
+  missing: { dot: "bg-red-500", badge: "destructive" },
+  uploaded: { dot: "bg-emerald-500", badge: "success" },
+  needs_review: { dot: "bg-amber-500", badge: "warning" },
+  approved: { dot: "bg-emerald-500", badge: "success" },
+  rejected: { dot: "bg-red-500", badge: "destructive" },
 };
 
 export function DocumentUploadCard({
@@ -31,6 +32,8 @@ export function DocumentUploadCard({
   const inputRef = React.useRef<HTMLInputElement>(null);
   const status = file?.status ?? "missing";
   const meta = STATUS_META[status];
+  const { t, locale } = useI18n();
+  const d = t.documents;
 
   function handleFiles(files: FileList | null) {
     if (files && files[0]) onUpload(files[0]);
@@ -63,19 +66,19 @@ export function DocumentUploadCard({
           <div>
             <div className="flex items-center gap-2">
               <h4 className="text-sm font-bold text-navy-900">{requirement.labelAr}</h4>
-              {requirement.required && <span className="text-[11px] text-destructive">إلزامي</span>}
+              {requirement.required && <span className="text-[11px] text-destructive">{t.common.required}</span>}
             </div>
             {requirement.descriptionAr && (
               <p className="mt-0.5 text-[12px] text-muted-foreground">{requirement.descriptionAr}</p>
             )}
             {file && (
               <p className="mt-1 text-[12px] text-navy-600">
-                {file.fileName} · رُفع بتاريخ {formatArabicDate(file.uploadedAt)}
+                {file.fileName} · {d.uploadedOn(formatArabicDate(file.uploadedAt, locale))}
               </p>
             )}
             {file?.employeeNote && (
               <p className="mt-1 flex items-center gap-1 text-[12px] text-amber-700">
-                <MessageSquareText className="size-3.5" /> ملاحظة الموظف: {file.employeeNote}
+                <MessageSquareText className="size-3.5" /> {d.employeeNote} {file.employeeNote}
               </p>
             )}
           </div>
@@ -84,7 +87,7 @@ export function DocumentUploadCard({
         <div className="flex shrink-0 items-center gap-2">
           <Badge variant={meta.badge}>
             <span className={cn("size-1.5 rounded-full", meta.dot)} />
-            {meta.label}
+            {d.status[status]}
           </Badge>
         </div>
       </div>
@@ -99,21 +102,21 @@ export function DocumentUploadCard({
         />
         {!file ? (
           <Button size="sm" variant="outline" onClick={() => inputRef.current?.click()}>
-            <UploadCloud className="size-4" /> رفع الملف أو اسحبه هنا
+            <UploadCloud className="size-4" /> {d.upload}
           </Button>
         ) : (
           <>
             <Button size="sm" variant="outline" onClick={() => inputRef.current?.click()}>
-              <RefreshCw className="size-4" /> استبدال
+              <RefreshCw className="size-4" /> {d.replace}
             </Button>
             <Button size="sm" variant="ghost" onClick={onRemove} className="text-destructive hover:bg-red-50">
-              <Trash2 className="size-4" /> حذف
+              <Trash2 className="size-4" /> {d.remove}
             </Button>
           </>
         )}
         {status === "needs_review" && (
           <span className="flex items-center gap-1 text-[11.5px] text-amber-700">
-            <AlertCircle className="size-3.5" /> يبدو أن المستند غير مكتمل أو غير واضح، يرجى رفع نسخة أوضح.
+            <AlertCircle className="size-3.5" /> {d.errors.unclear}
           </span>
         )}
       </div>

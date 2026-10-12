@@ -1,4 +1,6 @@
 import { DocumentRequirementItem } from "@/types";
+import type { Locale } from "@/lib/i18n/config";
+import { DOCUMENT_REQUIREMENTS_EN } from "@/lib/i18n/content/site.en";
 
 export const BASE_DOCUMENT_REQUIREMENTS: DocumentRequirementItem[] = [
   { key: "passport", labelAr: "جواز السفر", descriptionAr: "صفحة البيانات الشخصية، سارية 6 أشهر على الأقل.", required: true },
@@ -12,3 +14,12 @@ export const BASE_DOCUMENT_REQUIREMENTS: DocumentRequirementItem[] = [
   { key: "medical_insurance", labelAr: "التأمين الطبي", descriptionAr: "تغطية لا تقل عن 30,000 يورو لدول شنغن.", required: true },
   { key: "additional_docs", labelAr: "مستندات إضافية", descriptionAr: "أي مستندات إضافية يطلبها الموظف المختص.", required: false },
 ];
+
+/** Document checklist in the requested language. */
+export function getDocumentRequirements(locale: Locale = "ar"): DocumentRequirementItem[] {
+  if (locale === "ar") return BASE_DOCUMENT_REQUIREMENTS;
+  return BASE_DOCUMENT_REQUIREMENTS.map((item) => {
+    const text = DOCUMENT_REQUIREMENTS_EN[item.key];
+    return text ? { ...item, labelAr: text.label, descriptionAr: text.description } : item;
+  });
+}

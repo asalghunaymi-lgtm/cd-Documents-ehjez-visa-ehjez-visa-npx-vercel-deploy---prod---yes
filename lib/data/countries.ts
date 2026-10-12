@@ -1,4 +1,6 @@
 import { CountryVisaInfo } from "@/types";
+import type { Locale } from "@/lib/i18n/config";
+import { toEnglishCountry } from "@/lib/i18n/content/countries.en";
 
 const SCHENGEN_REQUIREMENTS = [
   "جواز سفر ساري المفعول لا تقل مدته عن 6 أشهر بعد تاريخ العودة، ويحتوي على صفحتين فارغتين على الأقل.",
@@ -401,13 +403,21 @@ export const COUNTRIES: CountryVisaInfo[] = [
   },
 ];
 
-export function getCountryBySlug(slug: string) {
-  return COUNTRIES.find((c) => c.slug === slug);
+const COUNTRIES_EN: CountryVisaInfo[] = COUNTRIES.map(toEnglishCountry);
+
+/** All countries with their visible text in the requested language (Arabic by default). */
+export function getCountries(locale: Locale = "ar"): CountryVisaInfo[] {
+  return locale === "en" ? COUNTRIES_EN : COUNTRIES;
 }
 
-export function getCountriesByRegion(region: RegionSlugFilter) {
-  if (region === "all") return COUNTRIES;
-  return COUNTRIES.filter((c) => c.region === region);
+export function getCountryBySlug(slug: string, locale: Locale = "ar") {
+  return getCountries(locale).find((c) => c.slug === slug);
+}
+
+export function getCountriesByRegion(region: RegionSlugFilter, locale: Locale = "ar") {
+  const countries = getCountries(locale);
+  if (region === "all") return countries;
+  return countries.filter((c) => c.region === region);
 }
 
 type RegionSlugFilter = CountryVisaInfo["region"] | "all";

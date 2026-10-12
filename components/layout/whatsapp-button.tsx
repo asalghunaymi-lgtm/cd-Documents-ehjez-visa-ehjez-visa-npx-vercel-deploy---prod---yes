@@ -1,13 +1,17 @@
+"use client";
+
 import { siteConfig } from "@/config/site";
+import { useI18n } from "@/lib/i18n/client";
 
 export function WhatsappButton() {
+  const { t } = useI18n();
   return (
     <a
       href={siteConfig.whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`تواصل معنا عبر واتساب: ${siteConfig.supportPhoneDisplay}`}
-      title={`تواصل معنا عبر واتساب: ${siteConfig.supportPhoneDisplay}`}
+      aria-label={t.whatsapp.label(siteConfig.supportPhoneDisplay)}
+      title={t.whatsapp.label(siteConfig.supportPhoneDisplay)}
       className="fixed bottom-5 right-5 z-50 flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/20 transition-transform hover:scale-105"
     >
       <svg viewBox="0 0 24 24" className="size-7" fill="currentColor" aria-hidden="true">

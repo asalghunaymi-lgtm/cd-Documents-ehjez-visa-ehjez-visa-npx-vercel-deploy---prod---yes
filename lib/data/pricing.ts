@@ -1,3 +1,6 @@
+import type { Locale } from "@/lib/i18n/config";
+import { PRICING_PLANS_EN } from "@/lib/i18n/content/site.en";
+
 export interface PricingPlan {
   key: string;
   titleAr: string;
@@ -47,3 +50,12 @@ export const PRICING_PLANS: PricingPlan[] = [
     features: ["ملف عائلي موحّد", "خصم على كل فرد إضافي", "مستندات ونماذج مستقلة لكل فرد"],
   },
 ];
+
+/** Pricing plans with their text in the requested language (prices are shared). */
+export function getPricingPlans(locale: Locale = "ar"): PricingPlan[] {
+  if (locale === "ar") return PRICING_PLANS;
+  return PRICING_PLANS.map((plan) => {
+    const text = PRICING_PLANS_EN[plan.key];
+    return text ? { ...plan, titleAr: text.title, descriptionAr: text.description, features: text.features } : plan;
+  });
+}

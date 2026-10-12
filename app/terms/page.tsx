@@ -1,46 +1,19 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "شروط الاستخدام",
-  description: "شروط استخدام منصة منفذ السعادة.",
-};
+import { getI18n } from "@/lib/i18n/server";
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t.legal.terms.metaTitle, description: t.legal.terms.metaDescription };
+}
 
-const SECTIONS = [
-  {
-    title: "طبيعة الخدمة",
-    body: "منفذ السعادة منصة مستقلة لتقديم خدمات المساعدة في إجراءات التأشيرات، وليست سفارة أو جهة حكومية، ولا تمثل أي دولة أو سفارة أو قنصلية بشكل رسمي.",
-  },
-  {
-    title: "عدم ضمان قبول الطلب",
-    body: "لا تضمن المنصة إصدار أو قبول أي تأشيرة. قرار منح أو رفض التأشيرة يعود حصريًا للجهة الرسمية المختصة في كل دولة، ولا تتحمل المنصة أي مسؤولية عن قرارات تلك الجهات.",
-  },
-  {
-    title: "دقة البيانات المقدَّمة",
-    body: "يلتزم العميل بتقديم بيانات ومستندات صحيحة ودقيقة. المنصة غير مسؤولة عن أي رفض أو تأخير ناتج عن بيانات أو مستندات غير صحيحة من العميل.",
-  },
-  {
-    title: "الرسوم",
-    body: "تُفرَّق المنصة بوضوح بين رسوم الخدمة التي تتقاضاها مقابل المساعدة، والرسوم الحكومية التي تُدفع مباشرة للجهة الرسمية ولا تعود على المنصة بأي شكل.",
-  },
-  {
-    title: "المواعيد والحجوزات",
-    body: "توجّه المنصة العميل إلى قنوات الحجز الرسمية المعتمدة، ولا تحجز مواعيد بشكل آلي دون توفر تصريح أو ربط تقني رسمي متاح.",
-  },
-  {
-    title: "استخدام الحساب",
-    body: "يلتزم العميل بالحفاظ على سرية بيانات الدخول لحسابه، وعدم مشاركتها مع أي طرف آخر.",
-  },
-  {
-    title: "التعديلات على الشروط",
-    body: "يجوز للمنصة تحديث هذه الشروط من وقت لآخر، وسيتم إعلام المستخدمين بأي تغييرات جوهرية.",
-  },
-];
-
-export default function TermsPage() {
+export default async function TermsPage() {
+  const { t } = await getI18n();
+  const c = t.legal.terms;
+  const SECTIONS = c.sections;
   return (
     <div className="container-app max-w-3xl py-14 sm:py-20">
-      <h1 className="mb-3 text-2xl font-extrabold text-navy-950 sm:text-3xl">شروط الاستخدام</h1>
-      <p className="mb-10 text-[13.5px] text-muted-foreground">آخر تحديث: أغسطس 2026</p>
+      <h1 className="mb-3 text-2xl font-extrabold text-navy-950 sm:text-3xl">{c.title}</h1>
+      <p className="mb-10 text-[13.5px] text-muted-foreground">{t.legal.lastUpdated}</p>
 
       <div className="space-y-8">
         {SECTIONS.map((s) => (

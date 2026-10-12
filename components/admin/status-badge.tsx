@@ -1,5 +1,8 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
-import { APPLICATION_STATUS_LABELS, ApplicationStatus } from "@/types";
+import { ApplicationStatus } from "@/types";
+import { useI18n } from "@/lib/i18n/client";
 
 const VARIANT_MAP: Record<ApplicationStatus, "default" | "success" | "warning" | "destructive" | "outline"> = {
   new: "outline",
@@ -18,5 +21,6 @@ const VARIANT_MAP: Record<ApplicationStatus, "default" | "success" | "warning" |
 };
 
 export function ApplicationStatusBadge({ status }: { status: ApplicationStatus }) {
-  return <Badge variant={VARIANT_MAP[status]}>{APPLICATION_STATUS_LABELS[status]}</Badge>;
+  const { t } = useI18n();
+  return <Badge variant={VARIANT_MAP[status]}>{t.applicationStatus[status]}</Badge>;
 }

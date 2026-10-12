@@ -1,3 +1,6 @@
+import type { Locale } from "@/lib/i18n/config";
+import { NATIONALITIES_EN } from "@/lib/i18n/content/site.en";
+
 export const NATIONALITIES = [
   { code: "SA", labelAr: "السعودية", flag: "🇸🇦" },
   { code: "AE", labelAr: "الإمارات", flag: "🇦🇪" },
@@ -8,3 +11,9 @@ export const NATIONALITIES = [
   { code: "EG", labelAr: "مصر", flag: "🇪🇬" },
   { code: "JO", labelAr: "الأردن", flag: "🇯🇴" },
 ];
+
+/** Nationalities with labels in the requested language. */
+export function getNationalities(locale: Locale = "ar") {
+  if (locale === "ar") return NATIONALITIES;
+  return NATIONALITIES.map((n) => ({ ...n, labelAr: NATIONALITIES_EN[n.code] ?? n.labelAr }));
+}

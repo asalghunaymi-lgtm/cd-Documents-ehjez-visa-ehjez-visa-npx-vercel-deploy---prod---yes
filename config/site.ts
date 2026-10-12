@@ -11,11 +11,12 @@ export const siteConfig = {
   supportEmail: "support@ehjez-visa.sa",
   disclaimer:
     "منفذ السعادة منصة مستقلة لتقديم خدمات المساعدة في إجراءات التأشيرات، وليست سفارة أو جهة حكومية ولا تضمن إصدار التأشيرة. قرار منح أو رفض التأشيرة يعود حصريًا إلى الجهة المختصة.",
+  // `key` points to the translated label in lib/i18n/dictionaries (t.nav[key]).
   nav: [
-    { href: "/", label: "الرئيسية" },
-    { href: "/visa", label: "الدول والتأشيرات" },
-    { href: "/pricing", label: "خدماتنا" },
-    { href: "/about", label: "من نحن" },
-    { href: "/faq", label: "الأسئلة الشائعة" },
-  ],
+    { href: "/", key: "home", label: "الرئيسية" },
+    { href: "/visa", key: "visas", label: "الدول والتأشيرات" },
+    { href: "/pricing", key: "services", label: "خدماتنا" },
+    { href: "/about", key: "about", label: "من نحن" },
+    { href: "/faq", key: "faq", label: "الأسئلة الشائعة" },
+  ] as const,
 };

@@ -5,32 +5,29 @@ import { SectionKicker } from "@/components/ui/section-kicker";
 import { CountryCard } from "./country-card";
 import { SchengenHelper } from "./schengen-helper";
 import { getCountriesByRegion } from "@/lib/data/countries";
+import { useI18n } from "@/lib/i18n/client";
 
-const REGIONS = [
-  { value: "schengen", label: "🇪🇺 شنغن" },
-  { value: "uk", label: "🇬🇧 بريطانيا" },
-  { value: "usa", label: "🇺🇸 أمريكا" },
-  { value: "australia", label: "🇦🇺 أستراليا" },
-  { value: "canada", label: "🇨🇦 كندا" },
-];
+const REGIONS = ["schengen", "uk", "usa", "australia", "canada"] as const;
 
 export function DestinationsSection() {
+  const { t, locale } = useI18n();
+  const c = t.home.destinations;
   return (
     <section className="py-16 sm:py-20">
       <div className="container-app">
         <div className="max-w-xl">
-          <SectionKicker>وجهاتنا</SectionKicker>
-          <h2 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">اختر وجهتك بثقة</h2>
+          <SectionKicker>{c.kicker}</SectionKicker>
+          <h2 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">{c.title}</h2>
           <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-            نغطي أهم وجهات السفر المطلوبة من المسافرين السعوديين، مع دليل واضح لمتطلبات كل دولة.
+            {c.lead}
           </p>
         </div>
 
         <Tabs defaultValue="schengen" className="mt-10 items-start">
           <TabsList className="flex-wrap h-auto gap-1 py-1.5">
             {REGIONS.map((r) => (
-              <TabsTrigger key={r.value} value={r.value}>
-                {r.label}
+              <TabsTrigger key={r} value={r}>
+                {c.regions[r]}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -40,8 +37,8 @@ export function DestinationsSection() {
               <SchengenHelper />
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {getCountriesByRegion("schengen").map((c) => (
-                <CountryCard key={c.slug} country={c} />
+              {getCountriesByRegion("schengen", locale).map((country) => (
+                <CountryCard key={country.slug} country={country} />
               ))}
             </div>
           </TabsContent>
@@ -49,8 +46,8 @@ export function DestinationsSection() {
           {(["uk", "usa", "australia", "canada"] as const).map((region) => (
             <TabsContent key={region} value={region} className="mt-8 w-full">
               <div className="mx-auto max-w-sm">
-                {getCountriesByRegion(region).map((c) => (
-                  <CountryCard key={c.slug} country={c} size="lg" />
+                {getCountriesByRegion(region, locale).map((country) => (
+                  <CountryCard key={country.slug} country={country} size="lg" />
                 ))}
               </div>
             </TabsContent>

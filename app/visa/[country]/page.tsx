@@ -13,6 +13,8 @@ import {
   ImportantNotesSection,
 } from "@/components/country/country-sections";
 import { siteConfig } from "@/config/site";
+import { getI18n, languageAlternates } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
 
 export function generateStaticParams() {
   return COUNTRIES.map((c) => ({ country: c.slug }));
@@ -24,17 +26,19 @@ export async function generateMetadata({
   params: Promise<{ country: string }>;
 }): Promise<Metadata> {
   const { country: slug } = await params;
-  const country = getCountryBySlug(slug);
+  const { t, locale } = await getI18n();
+  const country = getCountryBySlug(slug, locale);
   if (!country) return {};
 
-  const title = `تأشيرة ${country.nameAr} من السعودية | المتطلبات والمستندات والرسوم`;
-  const description = `دليل شامل لتأشيرة ${country.nameAr} من السعودية: أنواع التأشيرات، المستندات، الرسوم، خطوات التقديم، ومركز التقديم المعتمد. ${country.shortDescriptionAr}`;
+  const title = t.country.metaTitle(country.nameAr);
+  const description = t.country.metaDescription(country.nameAr, country.shortDescriptionAr);
+  const path = `/visa/${country.slug}`;
 
   return {
     title,
     description,
-    alternates: { canonical: `/visa/${country.slug}` },
-    openGraph: { title, description, url: `${siteConfig.url}/visa/${country.slug}` },
+    alternates: languageAlternates(path, locale),
+    openGraph: { title, description, url: `${siteConfig.url}${localizeHref(path, locale)}` },
   };
 }
 
@@ -44,7 +48,8 @@ export default async function CountryPage({
   params: Promise<{ country: string }>;
 }) {
   const { country: slug } = await params;
-  const country = getCountryBySlug(slug);
+  const { locale } = await getI18n();
+  const country = getCountryBySlug(slug, locale);
   if (!country) notFound();
 
   const faqJsonLd = {

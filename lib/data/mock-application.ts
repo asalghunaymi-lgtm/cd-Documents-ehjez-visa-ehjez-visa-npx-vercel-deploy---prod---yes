@@ -1,4 +1,6 @@
 import { ApplicationStatus } from "@/types";
+import type { Locale } from "@/lib/i18n/config";
+import { MOCK_APPLICATION_EN, PROGRESS_STEPS_EN } from "@/lib/i18n/content/site.en";
 
 export interface ProgressStep {
   key: string;
@@ -28,3 +30,13 @@ export const PROGRESS_STEPS: ProgressStep[] = [
   { key: "interview", label: "البصمة / المقابلة", state: "upcoming" },
   { key: "decision", label: "انتظار القرار", state: "upcoming" },
 ];
+
+/** Demo application in the requested language. */
+export function getMockApplication(locale: Locale = "ar") {
+  return locale === "en" ? { ...MOCK_APPLICATION, ...MOCK_APPLICATION_EN } : MOCK_APPLICATION;
+}
+
+export function getProgressSteps(locale: Locale = "ar"): ProgressStep[] {
+  if (locale === "ar") return PROGRESS_STEPS;
+  return PROGRESS_STEPS.map((s) => ({ ...s, label: PROGRESS_STEPS_EN[s.key] ?? s.label }));
+}

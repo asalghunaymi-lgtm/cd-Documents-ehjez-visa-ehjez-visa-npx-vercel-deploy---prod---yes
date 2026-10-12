@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { ProgressStep } from "@/lib/data/mock-application";
 import { cn } from "@/lib/utils";
 
-export function ApplicationProgress({ steps }: { steps: ProgressStep[] }) {
+export function ApplicationProgress({ steps, currentLabel }: { steps: ProgressStep[]; currentLabel: string }) {
   return (
     <ol className="space-y-0">
       {steps.map((step, i) => (
@@ -10,7 +10,7 @@ export function ApplicationProgress({ steps }: { steps: ProgressStep[] }) {
           {i < steps.length - 1 && (
             <span
               className={cn(
-                "absolute right-[15px] top-8 h-full w-0.5 rtl:right-[15px]",
+                "absolute start-[15px] top-8 h-full w-0.5",
                 step.state === "done" ? "bg-navy-900" : "bg-navy-100"
               )}
             />
@@ -35,7 +35,7 @@ export function ApplicationProgress({ steps }: { steps: ProgressStep[] }) {
               {step.label}
             </p>
             {step.state === "current" && (
-              <p className="mt-0.5 text-[12.5px] text-gold-700">جارٍ العمل على هذه الخطوة الآن</p>
+              <p className="mt-0.5 text-[12.5px] text-gold-700">{currentLabel}</p>
             )}
           </div>
         </li>

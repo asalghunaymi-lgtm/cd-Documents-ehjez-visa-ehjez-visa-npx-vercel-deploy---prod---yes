@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "@/components/i18n/link";
+import { useSearchParams } from "next/navigation";
 import { CheckCircle2, ChevronLeft, ChevronRight, Plus, Trash2, PartyPopper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,19 +12,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { StepIndicator, type WizardStep } from "./step-indicator";
-import { COUNTRIES } from "@/lib/data/countries";
-import { NATIONALITIES } from "@/lib/data/nationalities";
+import { getCountries } from "@/lib/data/countries";
+import { getNationalities } from "@/lib/data/nationalities";
+import { useI18n, useLocalizedRouter } from "@/lib/i18n/client";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { FamilyMember, TravelerData } from "@/types";
 import { cn } from "@/lib/utils";
 
-const STEPS: WizardStep[] = [
-  { key: "nationality", label: "الجنسية" },
-  { key: "country", label: "الدولة" },
-  { key: "visa-type", label: "نوع التأشيرة" },
-  { key: "traveler", label: "بيانات المسافر" },
-  { key: "family", label: "العائلة" },
-  { key: "review", label: "المراجعة" },
-];
+const STEP_KEYS = ["nationality", "country", "visaType", "traveler", "family", "review"] as const;
 
 const EMPTY_TRAVELER: TravelerData = {
   fullNameAr: "",
@@ -46,8 +41,13 @@ const EMPTY_TRAVELER: TravelerData = {
 };
 
 export function ApplyWizard() {
-  const router = useRouter();
+  const router = useLocalizedRouter();
   const searchParams = useSearchParams();
+  const { t, locale } = useI18n();
+  const w = t.wizard;
+  const COUNTRIES = getCountries(locale);
+  const NATIONALITIES = getNationalities(locale);
+  const STEPS: WizardStep[] = STEP_KEYS.map((key) => ({ key, label: w.steps[key] }));
 
   const [stepIndex, setStepIndex] = React.useState(0);
   const [nationality, setNationality] = React.useState("SA");
@@ -100,17 +100,16 @@ export function ApplyWizard() {
           <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-emerald-50">
             <PartyPopper className="size-8 text-emerald-600" />
           </div>
-          <h2 className="mb-2 text-xl font-extrabold text-navy-950">تم إنشاء طلبك بنجاح</h2>
+          <h2 className="mb-2 text-xl font-extrabold text-navy-950">{w.success.title}</h2>
           <p className="mb-6 text-[14px] leading-7 text-muted-foreground">
-            الخطوة التالية هي رفع مستنداتك حتى يستطيع فريقنا مراجعة طلبك وتجهيزه. يمكنك متابعة حالة الطلب في أي وقت
-            من لوحة &quot;ملفي&quot;.
+            {w.success.body}
           </p>
           <div className="flex flex-col gap-2.5 sm:flex-row sm:justify-center">
             <Button onClick={() => router.push("/documents")} variant="default" size="lg">
-              رفع المستندات الآن
+              {w.success.uploadDocuments}
             </Button>
             <Button onClick={() => router.push("/dashboard")} variant="outline" size="lg">
-              الذهاب إلى ملفي
+              {w.success.goToDashboard}
             </Button>
           </div>
         </CardContent>
@@ -127,7 +126,7 @@ export function ApplyWizard() {
       <Card>
         <CardContent className="p-6 sm:p-8">
           {stepIndex === 0 && (
-            <StepBlock title="اختر الجنسية" desc="سنستخدم هذه المعلومة لتحديد المتطلبات المناسبة لك.">
+            <StepBlock title={w.nationality.title} desc={w.nationality.desc}>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {NATIONALITIES.map((n) => (
                   <button
@@ -147,7 +146,7 @@ export function ApplyWizard() {
           )}
 
           {stepIndex === 1 && (
-            <StepBlock title="اختر دولة السفر" desc="اختر الدولة التي ترغب بالتقديم للحصول على تأشيرتها.">
+            <StepBlock title={w.country.title} desc={w.country.desc}>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {COUNTRIES.map((c) => (
                   <button
@@ -168,19 +167,18 @@ export function ApplyWizard() {
               </div>
               {country?.region === "schengen" && (
                 <p className="mt-4 text-[12.5px] leading-6 text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                  تذكير: يجب التقديم عبر الدولة التي ستقضي فيها أطول مدة من رحلتك، أو دولة الدخول الأول عند تساوي
-                  المدد. راجع{" "}
+                  {w.country.schengenReminderStart}{" "}
                   <Link href="/#schengen-helper" className="underline font-semibold">
-                    مساعد اختيار دولة شنغن
+                    {w.country.schengenReminderLink}
                   </Link>{" "}
-                  في الصفحة الرئيسية إذا لم تكن متأكدًا.
+                  {w.country.schengenReminderEnd}
                 </p>
               )}
             </StepBlock>
           )}
 
           {stepIndex === 2 && country && (
-            <StepBlock title="اختر نوع التأشيرة" desc={`أنواع التأشيرات المتاحة لدولة ${country.nameAr}.`}>
+            <StepBlock title={w.visaType.title} desc={w.visaType.desc(country.nameAr)}>
               <RadioGroup value={visaTypeSlug} onValueChange={setVisaTypeSlug} className="gap-3">
                 {country.visaTypes.map((v) => (
                   <label
@@ -202,15 +200,16 @@ export function ApplyWizard() {
           )}
 
           {stepIndex === 3 && (
-            <StepBlock title="بيانات المسافر" desc="عبّئ بياناتك كما تظهر في جواز السفر لضمان دقة الطلب.">
-              <TravelerForm data={traveler} onChange={setTraveler} />
+            <StepBlock title={w.traveler.title} desc={w.traveler.desc}>
+              <TravelerForm data={traveler} onChange={setTraveler} labels={w.fields} />
+              <p className="mt-4 text-[12.5px] text-muted-foreground">{w.validation.requiredHint}</p>
             </StepBlock>
           )}
 
           {stepIndex === 4 && (
             <StepBlock
-              title="أفراد العائلة (اختياري)"
-              desc="يمكنك إضافة الزوجة أو الأبناء ضمن نفس الطلب العائلي — لكل فرد بيانات ومستندات مستقلة لاحقًا."
+              title={w.family.title}
+              desc={w.family.desc}
             >
               <div className="space-y-3">
                 {family.map((m) => (
@@ -220,49 +219,52 @@ export function ApplyWizard() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="spouse">الزوجة</SelectItem>
-                        <SelectItem value="son">الابن</SelectItem>
-                        <SelectItem value="daughter">الابنة</SelectItem>
-                        <SelectItem value="other">أخرى</SelectItem>
+                        <SelectItem value="spouse">{w.family.relations.spouse}</SelectItem>
+                        <SelectItem value="son">{w.family.relations.son}</SelectItem>
+                        <SelectItem value="daughter">{w.family.relations.daughter}</SelectItem>
+                        <SelectItem value="other">{w.family.relations.other}</SelectItem>
                       </SelectContent>
                     </Select>
                     <Input
-                      placeholder="الاسم بالعربي"
+                      placeholder={w.family.nameAr}
+                      aria-label={w.family.nameAr}
                       value={m.fullNameAr}
                       onChange={(e) => updateFamilyMember(m.id, { fullNameAr: e.target.value })}
                     />
                     <Input
-                      placeholder="الاسم بالإنجليزي"
+                      placeholder={w.family.nameEn}
+                      aria-label={w.family.nameEn}
+                      dir="ltr"
                       value={m.fullNameEn}
                       onChange={(e) => updateFamilyMember(m.id, { fullNameEn: e.target.value })}
                     />
-                    <Button variant="ghost" size="icon" onClick={() => removeFamilyMember(m.id)}>
+                    <Button variant="ghost" size="icon" onClick={() => removeFamilyMember(m.id)} aria-label={w.family.remove} title={w.family.remove}>
                       <Trash2 className="size-4 text-destructive" />
                     </Button>
                   </div>
                 ))}
                 <Button variant="outline" onClick={addFamilyMember} className="w-full sm:w-auto">
-                  <Plus className="size-4" /> إضافة فرد من العائلة
+                  <Plus className="size-4" /> {w.family.add}
                 </Button>
               </div>
             </StepBlock>
           )}
 
           {stepIndex === 5 && country && visaType && (
-            <StepBlock title="مراجعة الطلب" desc="تأكد من صحة بياناتك قبل إنشاء الطلب.">
+            <StepBlock title={w.review.title} desc={w.review.desc}>
               <div className="space-y-4">
-                <ReviewRow label="الجنسية" value={NATIONALITIES.find((n) => n.code === nationality)?.labelAr ?? ""} />
-                <ReviewRow label="دولة السفر" value={`${country.flagEmoji} ${country.nameAr}`} />
-                <ReviewRow label="نوع التأشيرة" value={visaType.nameAr} />
-                <ReviewRow label="اسم المسافر" value={traveler.fullNameAr} />
-                <ReviewRow label="رقم الجواز" value={traveler.passportNumber} />
-                <ReviewRow label="رقم الجوال" value={traveler.phone} />
+                <ReviewRow label={w.review.nationality} value={NATIONALITIES.find((n) => n.code === nationality)?.labelAr ?? ""} />
+                <ReviewRow label={w.review.country} value={`${country.flagEmoji} ${country.nameAr}`} />
+                <ReviewRow label={w.review.visaType} value={visaType.nameAr} />
+                <ReviewRow label={w.review.travelerName} value={locale === "en" ? traveler.fullNameEn || traveler.fullNameAr : traveler.fullNameAr} />
+                <ReviewRow label={w.review.passportNumber} value={traveler.passportNumber} />
+                <ReviewRow label={w.review.phone} value={traveler.phone} />
                 {family.length > 0 && (
-                  <ReviewRow label="أفراد العائلة" value={`${family.length} فرد مضاف`} />
+                  <ReviewRow label={w.review.familyMembers} value={w.review.familyCount(family.length)} />
                 )}
                 <Badge variant="gold" className="mt-2">
                   <CheckCircle2 className="size-3.5" />
-                  البيانات جاهزة للإرسال
+                  {w.review.ready}
                 </Badge>
               </div>
             </StepBlock>
@@ -270,17 +272,17 @@ export function ApplyWizard() {
 
           <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
             <Button variant="ghost" onClick={back} disabled={stepIndex === 0}>
-              <ChevronRight className="size-4" />
-              السابق
+              <ChevronRight className="size-4 ltr:-scale-x-100" />
+              {w.back}
             </Button>
             {stepIndex < STEPS.length - 1 ? (
               <Button variant="default" onClick={next} disabled={!canProceed}>
-                التالي
-                <ChevronLeft className="size-4" />
+                {w.next}
+                <ChevronLeft className="size-4 ltr:-scale-x-100" />
               </Button>
             ) : (
               <Button variant="default" onClick={() => setSubmitted(true)}>
-                تأكيد وإنشاء الطلب
+                {w.submit}
               </Button>
             )}
           </div>
@@ -309,70 +311,78 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function TravelerForm({ data, onChange }: { data: TravelerData; onChange: (d: TravelerData) => void }) {
+function TravelerForm({
+  data,
+  onChange,
+  labels: l,
+}: {
+  data: TravelerData;
+  onChange: (d: TravelerData) => void;
+  labels: Dictionary["wizard"]["fields"];
+}) {
   function set<K extends keyof TravelerData>(key: K, value: TravelerData[K]) {
     onChange({ ...data, [key]: value });
   }
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field label="الاسم بالعربي" required>
-        <Input value={data.fullNameAr} onChange={(e) => set("fullNameAr", e.target.value)} />
+      <Field label={l.fullNameAr} required>
+        <Input dir="rtl" value={data.fullNameAr} onChange={(e) => set("fullNameAr", e.target.value)} />
       </Field>
-      <Field label="الاسم بالإنجليزي" required>
+      <Field label={l.fullNameEn} required>
         <Input value={data.fullNameEn} onChange={(e) => set("fullNameEn", e.target.value)} dir="ltr" />
       </Field>
-      <Field label="تاريخ الميلاد">
+      <Field label={l.birthDate}>
         <Input type="date" value={data.birthDate} onChange={(e) => set("birthDate", e.target.value)} />
       </Field>
-      <Field label="مكان الميلاد">
+      <Field label={l.birthPlace}>
         <Input value={data.birthPlace} onChange={(e) => set("birthPlace", e.target.value)} />
       </Field>
-      <Field label="رقم الجواز" required>
+      <Field label={l.passportNumber} required>
         <Input value={data.passportNumber} onChange={(e) => set("passportNumber", e.target.value)} dir="ltr" />
       </Field>
-      <Field label="تاريخ إصدار الجواز">
+      <Field label={l.passportIssueDate}>
         <Input type="date" value={data.passportIssueDate} onChange={(e) => set("passportIssueDate", e.target.value)} />
       </Field>
-      <Field label="تاريخ انتهاء الجواز">
+      <Field label={l.passportExpiryDate}>
         <Input type="date" value={data.passportExpiryDate} onChange={(e) => set("passportExpiryDate", e.target.value)} />
       </Field>
-      <Field label="الجنس">
+      <Field label={l.gender}>
         <Select value={data.gender} onValueChange={(v) => set("gender", v as TravelerData["gender"])}>
           <SelectTrigger><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="male">ذكر</SelectItem>
-            <SelectItem value="female">أنثى</SelectItem>
+            <SelectItem value="male">{l.genders.male}</SelectItem>
+            <SelectItem value="female">{l.genders.female}</SelectItem>
           </SelectContent>
         </Select>
       </Field>
-      <Field label="الحالة الاجتماعية">
+      <Field label={l.maritalStatus}>
         <Select value={data.maritalStatus} onValueChange={(v) => set("maritalStatus", v as TravelerData["maritalStatus"])}>
           <SelectTrigger><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="single">أعزب</SelectItem>
-            <SelectItem value="married">متزوج</SelectItem>
-            <SelectItem value="divorced">مطلق</SelectItem>
-            <SelectItem value="widowed">أرمل</SelectItem>
+            <SelectItem value="single">{l.maritalStatuses.single}</SelectItem>
+            <SelectItem value="married">{l.maritalStatuses.married}</SelectItem>
+            <SelectItem value="divorced">{l.maritalStatuses.divorced}</SelectItem>
+            <SelectItem value="widowed">{l.maritalStatuses.widowed}</SelectItem>
           </SelectContent>
         </Select>
       </Field>
-      <Field label="رقم الجوال" required>
+      <Field label={l.phone} required>
         <Input value={data.phone} onChange={(e) => set("phone", e.target.value)} dir="ltr" placeholder="05xxxxxxxx" />
       </Field>
-      <Field label="البريد الإلكتروني">
+      <Field label={l.email}>
         <Input type="email" value={data.email} onChange={(e) => set("email", e.target.value)} dir="ltr" />
       </Field>
-      <Field label="المدينة">
+      <Field label={l.city}>
         <Input value={data.city} onChange={(e) => set("city", e.target.value)} />
       </Field>
-      <Field label="العنوان" className="sm:col-span-2">
+      <Field label={l.address} className="sm:col-span-2">
         <Input value={data.address} onChange={(e) => set("address", e.target.value)} />
       </Field>
-      <Field label="المهنة">
+      <Field label={l.occupation}>
         <Input value={data.occupation} onChange={(e) => set("occupation", e.target.value)} />
       </Field>
-      <Field label="جهة العمل">
+      <Field label={l.employer}>
         <Input value={data.employer} onChange={(e) => set("employer", e.target.value)} />
       </Field>
     </div>

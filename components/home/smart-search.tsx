@@ -1,25 +1,26 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { Search, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { searchCountryByQuery } from "@/lib/data/search-index";
 import { getCountryBySlug } from "@/lib/data/countries";
 import { cn } from "@/lib/utils";
+import { useI18n, useLocalizedRouter } from "@/lib/i18n/client";
 
 export function SmartSearch() {
-  const router = useRouter();
+  const router = useLocalizedRouter();
+  const { t, locale } = useI18n();
   const [query, setQuery] = React.useState("");
   const [focused, setFocused] = React.useState(false);
 
   const matches = React.useMemo(() => {
     if (query.trim().length < 2) return [];
     return searchCountryByQuery(query)
-      .map((slug) => getCountryBySlug(slug))
+      .map((slug) => getCountryBySlug(slug, locale))
       .filter(Boolean);
-  }, [query]);
+  }, [query, locale]);
 
   return (
     <div className="relative mx-auto w-full max-w-xl">
@@ -36,11 +37,11 @@ export function SmartSearch() {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 150)}
-          placeholder="إلى أين تريد السفر؟ (مثال: لندن، باريس، أمريكا...)"
+          placeholder={t.home.search.placeholder}
           className="h-12 border-0 bg-transparent text-navy-950 placeholder:text-muted-foreground shadow-none focus-visible:ring-0"
         />
         <Button type="submit" variant="default" className="hidden shrink-0 sm:inline-flex">
-          ابحث
+          {t.home.search.submit}
         </Button>
       </form>
 
@@ -58,7 +59,7 @@ export function SmartSearch() {
                 <span className="text-xl">{c!.flagEmoji}</span>
                 {c!.nameAr}
               </span>
-              <ArrowLeft className="size-4 text-navy-400" />
+              <ArrowLeft className="size-4 text-navy-400 ltr:-scale-x-100" />
             </button>
           ))}
         </div>

@@ -1,4 +1,6 @@
 import { ApplicationStatus, DocumentStatus } from "@/types";
+import type { Locale } from "@/lib/i18n/config";
+import { MOCK_ADMIN_EN } from "@/lib/i18n/content/site.en";
 
 // بيانات تجريبية لعرض واجهات لوحة التحكم فقط — تُستبدل باستعلامات Supabase
 // الحقيقية عبر lib/supabase بعد ربط قاعدة البيانات (راجع database/schema.sql).
@@ -45,3 +47,14 @@ export const MOCK_PENDING_DOCUMENTS: MockDocumentRow[] = [
   { id: "d2", applicant: "نورة القحطاني", document: "خطاب جهة العمل", status: "uploaded", uploadedAt: "2026-08-15" },
   { id: "d3", applicant: "فهد العتيبي", document: "جواز السفر", status: "uploaded", uploadedAt: "2026-08-14" },
 ];
+
+/** Demo admin rows in the requested language. */
+export function getMockApplications(locale: Locale = "ar"): MockCustomerRow[] {
+  if (locale === "ar") return MOCK_APPLICATIONS;
+  return MOCK_APPLICATIONS.map((row) => ({ ...row, ...(MOCK_ADMIN_EN.applications[row.id] ?? {}) }));
+}
+
+export function getMockPendingDocuments(locale: Locale = "ar"): MockDocumentRow[] {
+  if (locale === "ar") return MOCK_PENDING_DOCUMENTS;
+  return MOCK_PENDING_DOCUMENTS.map((row) => ({ ...row, ...(MOCK_ADMIN_EN.documents[row.id] ?? {}) }));
+}

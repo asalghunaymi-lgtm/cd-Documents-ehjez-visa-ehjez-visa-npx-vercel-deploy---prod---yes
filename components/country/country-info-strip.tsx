@@ -1,13 +1,16 @@
 import { Clock, Landmark, Wallet, Building2 } from "lucide-react";
 import { CountryVisaInfo } from "@/types";
 import { formatFeeRange } from "@/lib/format-fee";
+import { getI18n } from "@/lib/i18n/server";
 
-export function CountryInfoStrip({ country }: { country: CountryVisaInfo }) {
+export async function CountryInfoStrip({ country }: { country: CountryVisaInfo }) {
+  const { t, locale } = await getI18n();
+  const l = t.country.info;
   const items = [
-    { icon: Clock, label: "مدة المعالجة التقريبية", value: country.processingTimeAr },
-    { icon: Landmark, label: "الرسوم الحكومية", value: formatFeeRange(country.governmentFeeSAR) },
-    { icon: Wallet, label: "رسوم خدمة المنصة", value: `تبدأ من ${formatFeeRange(country.serviceFeeSAR)}` },
-    { icon: Building2, label: "مركز التقديم", value: country.applicationCenterAr },
+    { icon: Clock, label: l.processingTime, value: country.processingTimeAr },
+    { icon: Landmark, label: l.governmentFee, value: formatFeeRange(country.governmentFeeSAR, locale) },
+    { icon: Wallet, label: l.serviceFee, value: l.serviceFeeValue(formatFeeRange(country.serviceFeeSAR, locale)) },
+    { icon: Building2, label: l.applicationCentre, value: country.applicationCenterAr },
   ];
 
   return (

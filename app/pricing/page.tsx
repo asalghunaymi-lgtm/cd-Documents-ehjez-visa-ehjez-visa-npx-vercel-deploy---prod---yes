@@ -1,38 +1,41 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/link";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PRICING_PLANS } from "@/lib/data/pricing";
+import { getPricingPlans } from "@/lib/data/pricing";
+import { getI18n } from "@/lib/i18n/server";
 import { SectionKicker } from "@/components/ui/section-kicker";
 import { cn, formatSAR } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "خدماتنا",
-  description: "تعرّف على أسعار خدمات منفذ السعادة: تعبئة النموذج، مراجعة المستندات، تجهيز الطلب، وحجز الموعد.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getI18n();
+  return { title: t.pricing.metaTitle, description: t.pricing.metaDescription };
+}
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const { t, locale } = await getI18n();
+  const c = t.pricing;
   return (
     <div className="py-14 sm:py-20">
       <div className="container-app">
         <div className="mb-12 max-w-xl">
-          <SectionKicker>خدماتنا</SectionKicker>
-          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">أسعار واضحة لكل خدمة</h1>
+          <SectionKicker>{c.kicker}</SectionKicker>
+          <h1 className="text-2xl font-extrabold text-navy-950 sm:text-3xl">{c.title}</h1>
           <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-            منفصلة تمامًا عن الرسوم الحكومية التي تُدفع مباشرة للجهة الرسمية.
+            {c.lead}
           </p>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PRICING_PLANS.map((plan) => (
+          {getPricingPlans(locale).map((plan) => (
             <Card
               key={plan.key}
               className={cn("relative flex flex-col", plan.highlighted && "border-gold-300 ring-2 ring-gold-200")}
             >
               {plan.highlighted && (
                 <span className="absolute -top-3 start-6 rounded-full bg-gold-500 px-3 py-1 text-[11px] font-bold text-navy-950">
-                  الأكثر طلبًا
+                  {t.common.popular}
                 </span>
               )}
               <CardContent className="flex flex-1 flex-col p-6">
@@ -41,11 +44,12 @@ export default function PricingPage() {
                 <div className="my-5">
                   {plan.fromPriceSAR > 0 ? (
                     <div className="text-2xl font-extrabold text-navy-950">
-                      {formatSAR(plan.fromPriceSAR)}
-                      <span className="text-sm font-medium text-muted-foreground"> ابتداءً من</span>
+                      {locale === "en" && <span className="text-sm font-medium text-muted-foreground">{c.from} </span>}
+                      {formatSAR(plan.fromPriceSAR, locale)}
+                      {locale === "ar" && <span className="text-sm font-medium text-muted-foreground"> {c.from}</span>}
                     </div>
                   ) : (
-                    <div className="text-2xl font-extrabold text-navy-950">سعر خاص</div>
+                    <div className="text-2xl font-extrabold text-navy-950">{c.specialPrice}</div>
                   )}
                 </div>
                 <ul className="mb-6 flex-1 space-y-2.5">
@@ -57,7 +61,7 @@ export default function PricingPage() {
                   ))}
                 </ul>
                 <Button asChild variant={plan.highlighted ? "gold" : "outline"}>
-                  <Link href="/apply">ابدأ الآن</Link>
+                  <Link href="/apply">{c.startNow}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -65,7 +69,7 @@ export default function PricingPage() {
         </div>
 
         <p className="mt-10 max-w-2xl text-[13px] text-muted-foreground">
-          الرسوم الحكومية للسفارات والقنصليات منفصلة تمامًا عن رسوم خدمة المنصة، وتُعرض بوضوح قبل أي عملية دفع.
+          {c.footnote}
         </p>
       </div>
     </div>

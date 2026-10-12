@@ -1,13 +1,9 @@
 import { Compass } from "lucide-react";
+import { getI18n } from "@/lib/i18n/server";
 
-const DESTINATIONS = [
-  { city: "لندن", region: "بريطانيا" },
-  { city: "باريس", region: "شنغن" },
-  { city: "دبي", region: "الإمارات" },
-  { city: "تورنتو", region: "كندا" },
-];
-
-export function RoutePanel() {
+export async function RoutePanel() {
+  const { t } = await getI18n();
+  const r = t.home.routePanel;
   return (
     <div className="relative overflow-hidden rounded-lg bg-navy-950 p-8 sm:p-10">
       <Compass
@@ -22,16 +18,16 @@ export function RoutePanel() {
           <span className="relative inline-flex size-2.5 rounded-full bg-gold-400" />
         </span>
         <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-navy-200">
-          الرياض · نقطة الانطلاق
+          {r.origin}
         </span>
       </div>
 
       <p className="relative mt-4 max-w-[26ch] text-sm leading-7 text-navy-300">
-        وجهات نغطي متطلباتها بالتفصيل، بمتابعة مستمرة للتحديثات الرسمية.
+        {r.intro}
       </p>
 
       <ul className="relative mt-8 divide-y divide-white/10 border-t border-white/10">
-        {DESTINATIONS.map((d) => (
+        {r.destinations.map((d) => (
           <li key={d.city} className="flex items-center justify-between py-3.5 text-sm">
             <span className="font-bold text-white">{d.city}</span>
             <span className="text-[12px] text-navy-300">{d.region}</span>

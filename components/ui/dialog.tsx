@@ -4,6 +4,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/client";
 
 function Dialog(props: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -48,7 +49,7 @@ function DialogContent({
         {children}
         <DialogPrimitive.Close className="absolute end-4 top-4 rounded-full p-1.5 text-navy-400 hover:bg-navy-50 hover:text-navy-700 outline-none">
           <X className="size-4" />
-          <span className="sr-only">إغلاق</span>
+          <CloseLabel />
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>
@@ -92,3 +93,8 @@ export {
   DialogDescription,
   DialogFooter,
 };
+
+function CloseLabel() {
+  const { t } = useI18n();
+  return <span className="sr-only">{t.common.close}</span>;
+}
