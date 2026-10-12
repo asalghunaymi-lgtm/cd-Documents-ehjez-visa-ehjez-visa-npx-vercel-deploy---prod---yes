@@ -7,7 +7,7 @@ import { RoutePanel } from "./route-panel";
 
 const HIGHLIGHTS = [
   { value: "+12", label: "دولة ووجهة مغطاة" },
-  { value: "100%", label: "عربي من الطلب للمتابعة" },
+  { value: "100%", label: "نرافقك من تقديم الطلب حتى صدور التأشيرة" },
   { value: "24/7", label: "متابعة حالة الطلب" },
 ];
 
