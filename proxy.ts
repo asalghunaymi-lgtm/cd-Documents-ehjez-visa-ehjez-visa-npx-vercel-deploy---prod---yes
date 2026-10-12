@@ -9,6 +9,8 @@ import {
   stripLocale,
 } from "@/lib/i18n/config";
 
+const LANG_PARAM = "__lang";
+
 // Language routing — توجيه اللغة
 //
 // • /visa/france        → Arabic (default, unchanged URLs)
@@ -41,12 +43,12 @@ export function proxy(request: NextRequest) {
   requestHeaders.set(LOCALE_HEADER, locale);
   requestHeaders.set(PATHNAME_HEADER, internalPath);
 
-  const response =
-    locale === "en"
-      ? NextResponse.rewrite(new URL(`${internalPath}${search}`, request.url), {
-          request: { headers: requestHeaders },
-        })
-      : NextResponse.next({ request: { headers: requestHeaders } });
+  // Both languages are rewritten with a `__lang` search param. It never shows in the
+  // address bar, but it gives the Arabic and English versions of a page different keys
+  // in the Next.js client router cache, so switching language always loads the right one.
+  const internalUrl = new URL(`${internalPath}${search}`, request.url);
+  internalUrl.searchParams.set(LANG_PARAM, locale);
+  const response = NextResponse.rewrite(internalUrl, { request: { headers: requestHeaders } });
 
   // Visiting an /en URL directly (shared link, search result) also remembers English.
   if (locale === "en" && savedLocale !== "en") {
